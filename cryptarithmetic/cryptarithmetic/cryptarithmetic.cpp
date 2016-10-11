@@ -40,5 +40,5 @@ void main()
 	cout << My_Formula.Pointer_Ans[i]->num;
 	}
 	cout << endl;*/
-
+	My_Formula.track_recursion();
 }

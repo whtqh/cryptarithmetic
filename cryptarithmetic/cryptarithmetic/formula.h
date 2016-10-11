@@ -11,7 +11,7 @@ public:
 	int N_Ans_Len;
 	int N_Add_LenMax;
 	int Carry_Max;
-	int Next_Location;
+	char Last_Symbol;
 	//set the N1 > N2, N3 >= N1
 	int symbol_num;
 	string symbol_layout;
@@ -23,8 +23,10 @@ public:
 	formula(string *str_in, string str_ans, int k);
 	~formula();
 	void track_recursion();
-	void find_goal_symbol();
+	bool find_goal_symbol();
 	void update_species();
 	void restore_species();
 	void contradiction();
+	void PrintAnswer();
+	bool CheckStatus();
 };

@@ -101,21 +101,44 @@ formula::~formula()
 }
 void formula::track_recursion()
 {
-	this->update_species();
-	this->find_goal_symbol();
+	if (CheckStatus())
+	{
+		cout << "-----------Answer-----------" << endl;
+		return;
+	}
+	if (this->find_goal_symbol() == false)
+	{
+		return;
+	}
+	int temp_id = 0;
 	for (int i = 0; i < 10; i++)
 	{
 		//Track_recurision
-		if (result[i].species_check[i])
-			;
+		if (result[i].layout == Last_Symbol)
+		{
+			temp_id = i;
+			break;
+		}
 	}
-	this->restore_species();
+	for (int i = 0; i < 10; i++)
+	{
+		result[temp_id].Known = true;
+		if (result[temp_id].species_check[i] == 1)
+		{
+			result[temp_id].num = i;
+
+			track_recursion();
+			this->restore_species();
+		}
+	}
+	return;
 }
-void formula::find_goal_symbol() //calculate the min weight of each colum
+bool formula::find_goal_symbol() //calculate the min weight of each colum
 {
 	this->update_species();
-	//Next_Location = j;
+	int Next_Location = 0;
 	int min_factor = 0;
+	bool find_first_min = false;
 	for (int j = 0; j < N_Add_LenMax; j++)
 	{
 		int temp_choice_factor = 0;
@@ -126,25 +149,79 @@ void formula::find_goal_symbol() //calculate the min weight of each colum
 				temp_choice_factor = temp_choice_factor + Pointer_N[i][j]->species_num;
 			}
 		}
-		if (j == 0)
+		if (Pointer_Ans[j]->Known == false)
+		{
+			temp_choice_factor = temp_choice_factor + Pointer_Ans[j]->species_num;
+		}
+		if(find_first_min == false && temp_choice_factor > 0)//Bug...
 		{
 			min_factor = temp_choice_factor;
 			Next_Location = j;
+			find_first_min = true;
 		}
-		if (min_factor > temp_choice_factor)
+		if (min_factor > temp_choice_factor&&temp_choice_factor>0)
 		{
 			min_factor = temp_choice_factor;
 			Next_Location = j;
 		}
 	}
+	if (N_Add_LenMax < N_Ans_Len)
+	{
+		for (int j = N_Add_LenMax; j < N_Ans_Len; j++)
+		{
+			if (Pointer_Ans[j]->Known == false)
+			{
+				if (Pointer_Ans[j]->species_num < min_factor)
+				{
+					min_factor = Pointer_Ans[j]->species_num;
+					Next_Location = j;
+				}
+			}
+		}
+	}
+	if (find_first_min == false)
+	{
+		Last_Symbol = ' ';
+		return false;
+	}
+	if (Next_Location >= N_Add_LenMax)
+	{
+		Last_Symbol = Pointer_Ans[Next_Location]->layout;
+	}
+	else 
+	{
+		int min_num = 10;
+		int min_id = -1;
+		for (int i = 0; i < NK; i++)
+		{
+			if (Pointer_N[i][Next_Location]->Known == false)
+			{
+				if (Pointer_N[i][Next_Location]->species_num <= min_num)
+				{
+					min_num = Pointer_N[i][Next_Location]->species_num;
+					min_id = i;
+				}
+			}
+		}
+		Last_Symbol = Pointer_N[min_id][Next_Location]->layout;
+		if (Pointer_Ans[Next_Location]->Known == false)
+		{
+			if (Pointer_Ans[Next_Location]->species_num <= min_num)
+			{
+				min_num = Pointer_Ans[Next_Location]->species_num;
+			}
+			Last_Symbol = Pointer_Ans[Next_Location]->layout;
+		}
+	}
+	return true;
 }
 void formula::update_species()	//Before Do it add a check accessible func.
 {
 	this->contradiction();
+	int Temp_Carry = 0;
+	int Sum_Bit = 9 * NK + Temp_Carry;
 	for (int j = 0; j < N_Add_LenMax; j++)
 	{
-		int Temp_Carry = 0;
-		int Sum_Bit = 9 * NK +Temp_Carry;
 		int unknown_num = 0;
 		int unknown_id = 0;
 		for (int i = 0; i < NK; i++)
@@ -198,12 +275,12 @@ void formula::update_species()	//Before Do it add a check accessible func.
 			}
 			else
 			{
-				for (int t = 0; t < Temp_Carry; t++)
+				for (int p = 0; p < 10; p++)
 				{
-					for (int p = 0; p < 10; p++)
-					{
-						Pointer_Ans[j]->species_check[p] = -1;
-					}
+					Pointer_Ans[j]->species_check[p] = -1;
+				}
+				for (int t = 0; t <= Temp_Carry; t++)
+				{
 					Pointer_Ans[j]->species_num = 0;
 					int temp_c = (int)((Sum_Bit + t - Temp_Carry) / 10);
 					int remainder = Sum_Bit + t - Temp_Carry - 10 * temp_c ;
@@ -217,22 +294,37 @@ void formula::update_species()	//Before Do it add a check accessible func.
 		{
 			Temp_Carry = (int)(Sum_Bit / 10);
 		}
+		Sum_Bit = 9 * NK + Temp_Carry;
 	}
-}
-void formula::restore_species() 
-{
-	for (int i = 0; i < symbol_num; i++)
+	if (N_Ans_Len > N_Add_LenMax)
 	{
-		if (result[i].Known == false)
+		for (int j = N_Add_LenMax; j < N_Ans_Len; j++)
 		{
-			result[i].num = -1;
-			result[i].species_num = 10;
-			for (int j = 0; j < 10; j++)
+			Sum_Bit = Temp_Carry;
+			if (Pointer_Ans[j]->Known == true)
 			{
-				result[i].species_check[j] = 1;
+				Temp_Carry = (int)((Sum_Bit - Pointer_Ans[j]->num) / 10);
 			}
+			else
+			{
+				for (int p = 0; p < 10; p++)
+				{
+					Pointer_Ans[j]->species_check[p] = -1;
+				}
+				for (int t = 0; t <= Temp_Carry; t++)
+				{
+					Pointer_Ans[j]->species_num = 0;
+					int temp_c = (int)((Sum_Bit + t - Temp_Carry) / 10);
+					int remainder = Sum_Bit + t - Temp_Carry - 10 * temp_c;
+					Pointer_Ans[j]->species_check[remainder] = 1;
+					Pointer_Ans[j]->species_num++;
+				}
+				Temp_Carry = (int)(Sum_Bit / 10);
+			}
+			
 		}
 	}
+	
 }
 void formula::contradiction() 
 {
@@ -247,7 +339,7 @@ void formula::contradiction()
 
 	for (int j = 0; j < 10; j++)
 	{
-		if (flag_all[j] = true)
+		if (flag_all[j] == true)
 		{
 			for (int i = 0; i < symbol_num; i++)
 			{
@@ -259,4 +351,53 @@ void formula::contradiction()
 		}
 	}
 	
+}
+void formula::restore_species()
+{
+	for (int i = 0; i < symbol_num; i++)
+	{
+		if (result[i].Known == false)
+		{
+			result[i].num = -1;
+			result[i].species_num = 10;
+			for (int j = 0; j < 10; j++)
+			{
+				result[i].species_check[j] = 1;
+			}
+		}
+		if (result[i].layout == Last_Symbol)
+		{
+			result[i].Known = false;
+			//TODO:
+		}
+	}
+
+}
+void formula::PrintAnswer()
+{
+	for (int i = 0; i < NK; i++)
+	{
+	for (int j = 0; j < N_Add_LenMax; j++)
+	{
+	cout << Pointer_N[i][N_Add_LenMax - j -1]->num ;
+	}
+	cout << endl;
+	}
+	cout << "+ _____________" << endl;
+	for (int i = 0; i < N_Ans_Len; i++)
+	{
+	cout << Pointer_Ans[N_Ans_Len - i -1]->num;
+	}
+	cout << endl;
+}
+bool formula::CheckStatus() {
+	for (int i = 0; i < symbol_num; i++)
+	{
+		if (result[i].Known == false)
+		{
+			return false;
+		}
+	}
+	PrintAnswer();
+	return true;
 }
