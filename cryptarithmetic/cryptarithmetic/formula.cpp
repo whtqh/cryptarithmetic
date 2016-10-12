@@ -511,5 +511,10 @@ bool formula::CarryCheck()
 				return false;
 		}
 	}
+	else
+	{
+		if (carry_check[N_Ans_Len] != 0)
+			return false;
+	}
 	return true;
 }
