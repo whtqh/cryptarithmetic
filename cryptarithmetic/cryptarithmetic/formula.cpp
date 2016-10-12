@@ -108,17 +108,17 @@ void formula::track_recursion()
 	
 	if (this->find_goal_symbol() == false)
 	{
-		Last_Symbol = RestoreSymbol;//有问题，当发现找不到下一个应该找的字母的时候应该怎么处理？
-		for (int i = 0; i < 10; i++)
-		{
-			//Track_recurision
-			if (result[i].layout == Last_Symbol)
-			{
-				temp_id = i;
-				break;
-			}
-		}
-		result[temp_id].Known = false;
+		//Last_Symbol = RestoreSymbol;//有问题，当发现找不到下一个应该找的字母的时候应该怎么处理？
+		//for (int i = 0; i < 10; i++)
+		//{
+		//	//Track_recurision
+		//	if (result[i].layout == Last_Symbol)
+		//	{
+		//		temp_id = i;
+		//		break;
+		//	}
+		//}
+		//result[temp_id].Known = false;
 		return;
 	}
 	Track_Depth++;
@@ -150,8 +150,8 @@ void formula::track_recursion()
 		
 		if (result[temp_id].species_check[i] == 1)
 		{
-			printf("*****Depth: [ %d ]*****Type_num = %d\n", Track_Depth,result[temp_id].species_num);
-			printf("Now: value of [ %c ]= %d\n",result[temp_id].layout, i);
+			//printf("*****Depth: [ %d ]*****Type_num = %d\n", Track_Depth,result[temp_id].species_num);
+			//printf("Now: value of [ %c ]= %d\n",result[temp_id].layout, i);
 			result[temp_id].num = i;
 			result[temp_id].species_num = 1;
 			for (int j = 0; j < 10; j++)
@@ -169,6 +169,7 @@ void formula::track_recursion()
 						result[temp_id].species_check[j] = RestoreCheck[j];
 					}
 				}
+				this->restore_species();
 				continue;
 				//return;
 			}
@@ -183,6 +184,7 @@ void formula::track_recursion()
 						result[temp_id].species_check[j] = RestoreCheck[j];
 					}
 				}
+				this->restore_species();
 				continue;
 			}
 			track_recursion();		//递归函数，有可能因为搜索失败返回并且没有能够初始化。
@@ -191,6 +193,7 @@ void formula::track_recursion()
 		{
 			result[temp_id].species_check[j] = RestoreCheck[j];
 		}
+		restore_species();
 	}
 	result[temp_id].species_num = RestoreNum;	//其实感觉没有什么意义
 	result[temp_id].Known = false;
@@ -290,7 +293,7 @@ bool formula::find_goal_symbol() //calculate the min weight of each colum
 		}
 	}
 	//找到下一个搜索的字母
-	printf("Change to :=========>%c\n", Last_Symbol);
+	//printf("Change to :=========>%c\n", Last_Symbol);
 	return true;
 }
 void formula::update_species()	//Before Do it add a check accessible func.
@@ -323,14 +326,13 @@ void formula::update_species()	//Before Do it add a check accessible func.
 					temp_sum = temp_sum + Pointer_N[t][j]->num;
 				}
 				//TODO
+				for (int p = 0; p < 10; p++)
+				{
+					Pointer_N[unknown_id][j]->species_check[p] = -1;
+				}
+				Pointer_N[unknown_id][j]->species_num = 0;
 				for (int t = 0; t <= Temp_Carry; t++)
 				{
-					for (int p = 0; p < 10; p++)
-					{
-						Pointer_N[unknown_id][j]->species_check[p] = -1;
-					}
-					Pointer_N[unknown_id][j]->species_num = 0;
-
 					int remainder = t + temp_sum - 10 * (int)((t + temp_sum) / 10);
 					if (remainder <= Pointer_Ans[j]->num)	//think about 9+9+9+9+x = 7
 					{
@@ -360,9 +362,9 @@ void formula::update_species()	//Before Do it add a check accessible func.
 				{
 					Pointer_Ans[j]->species_check[p] = -1;
 				}
+				Pointer_Ans[j]->species_num = 0;
 				for (int t = 0; t <= Temp_Carry; t++)
 				{
-					Pointer_Ans[j]->species_num = 0;
 					int temp_c = (int)((Sum_Bit + t - Temp_Carry) / 10);
 					int remainder = Sum_Bit + t - Temp_Carry - 10 * temp_c ;
 					Pointer_Ans[j]->species_check[remainder] = 1;
