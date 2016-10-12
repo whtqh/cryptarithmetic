@@ -13,6 +13,7 @@ public:
 	int Carry_Max;
 	char Last_Symbol;
 	char RestoreSymbol;
+	int Track_Depth;
 	//set the N1 > N2, N3 >= N1
 	int symbol_num;
 	string symbol_layout;

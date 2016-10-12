@@ -7,6 +7,7 @@ formula::formula(string *str_in, string str_ans,int k)
 	result = new symbol[10];
 	Carry_Max = k - 1;
 	NK = k;
+	Track_Depth = 0;
 	string temp_const_str = "0123456789";
 	for (int i = 0; i < 10; i++)
 	{
@@ -107,10 +108,21 @@ void formula::track_recursion()
 	
 	if (this->find_goal_symbol() == false)
 	{
-		Last_Symbol = RestoreSymbol;
+		Last_Symbol = RestoreSymbol;//有问题，当发现找不到下一个应该找的字母的时候应该怎么处理？
+		for (int i = 0; i < 10; i++)
+		{
+			//Track_recurision
+			if (result[i].layout == Last_Symbol)
+			{
+				temp_id = i;
+				break;
+			}
+		}
+		result[temp_id].Known = false;
 		return;
 	}
-
+	Track_Depth++;
+	
 	for (int i = 0; i < 10; i++)
 	{
 		//Track_recurision
@@ -138,6 +150,8 @@ void formula::track_recursion()
 		
 		if (result[temp_id].species_check[i] == 1)
 		{
+			printf("*****Depth: [ %d ]*****Type_num = %d\n", Track_Depth,result[temp_id].species_num);
+			printf("Now: value of [ %c ]= %d\n",result[temp_id].layout, i);
 			result[temp_id].num = i;
 			result[temp_id].species_num = 1;
 			for (int j = 0; j < 10; j++)
@@ -154,11 +168,9 @@ void formula::track_recursion()
 					{
 						result[temp_id].species_check[j] = RestoreCheck[j];
 					}
-					result[temp_id].species_num = RestoreNum;
-					//this->restore_species();
-					result[temp_id].Known = false;
 				}
-				return;
+				continue;
+				//return;
 			}
 			if (CheckStatus())
 			{
@@ -170,31 +182,33 @@ void formula::track_recursion()
 					{
 						result[temp_id].species_check[j] = RestoreCheck[j];
 					}
-					result[temp_id].species_num = RestoreNum;
-					//this->restore_species();
-					result[temp_id].Known = false;
 				}
-				return;
+				continue;
 			}
-			track_recursion();
-			for (int j = 0; j < 10; j++)
-			{
-				result[temp_id].species_check[j] = RestoreCheck[j];
-			}
-			result[temp_id].species_num = RestoreNum;
-			//this->restore_species();
-			result[temp_id].Known = false;
+			track_recursion();		//递归函数，有可能因为搜索失败返回并且没有能够初始化。
+		}
+		for (int j = 0; j < 10; j++)
+		{
+			result[temp_id].species_check[j] = RestoreCheck[j];
 		}
 	}
-	//return;
+	result[temp_id].species_num = RestoreNum;	//其实感觉没有什么意义
+	result[temp_id].Known = false;
+	this->restore_species();	//坑比函数
+	Track_Depth--;
+	return;
 }
 bool formula::find_goal_symbol() //calculate the min weight of each colum
 {
-	this->update_species();
+	this->update_species();	
+	//缩小当前取值范围
 	if (contradiction() == false)
 		return false;
+	//如果发现取值矛盾，退出
 	if (CheckStatus() == true)
 		return true;
+	//检查是否已经遍历所有字母
+
 	//限定当前各元素取值范围，包括解决冲突问题等。
 	int Next_Location = 0;
 	int min_factor = 0;
@@ -439,18 +453,7 @@ void formula::restore_species()
 				result[i].species_check[j] = 1;
 			}
 		}
-		if (result[i].layout == Last_Symbol)
-		{
-			result[i].num = -1;
-			result[i].species_num = 10;
-			for (int j = 0; j < 10; j++)
-			{
-				result[i].species_check[j] = 1;
-			}
-		}
 	}
-
-
 }
 void formula::PrintAnswer()
 {
