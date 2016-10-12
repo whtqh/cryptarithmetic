@@ -101,16 +101,16 @@ formula::~formula()
 }
 void formula::track_recursion()
 {
-	if (CheckStatus())
-	{
-		cout << "-----------Answer-----------" << endl;
-		return;
-	}
+	int temp_id = -1;
+	int RestoreCheck[10] = { 0 };
+	int RestoreNum = 0;
+	
 	if (this->find_goal_symbol() == false)
 	{
+		Last_Symbol = RestoreSymbol;
 		return;
 	}
-	int temp_id = 0;
+
 	for (int i = 0; i < 10; i++)
 	{
 		//Track_recurision
@@ -120,22 +120,82 @@ void formula::track_recursion()
 			break;
 		}
 	}
-	for (int i = 0; i < 10; i++)
+	//找到上一次递归中决定的下一个要找的字母位置
+	if (temp_id != -1)
 	{
+		RestoreNum = result[temp_id].species_num;
+		for (int j = 0; j < 10; j++)
+		{
+			RestoreCheck[j] = result[temp_id].species_check[j];
+		}
 		result[temp_id].Known = true;
+		RestoreSymbol = Last_Symbol;
+	}
+
+	
+	for (int i = 0; i < 10; i++)//遍历所有可能进行搜索
+	{
+		
 		if (result[temp_id].species_check[i] == 1)
 		{
 			result[temp_id].num = i;
-
+			result[temp_id].species_num = 1;
+			for (int j = 0; j < 10; j++)
+			{
+				if (j == i)
+					continue;
+				result[temp_id].species_check[j] = -1;
+			}
+			if (contradiction() == false)
+			{
+				if (temp_id != -1)
+				{
+					for (int j = 0; j < 10; j++)
+					{
+						result[temp_id].species_check[j] = RestoreCheck[j];
+					}
+					result[temp_id].species_num = RestoreNum;
+					//this->restore_species();
+					result[temp_id].Known = false;
+				}
+				return;
+			}
+			if (CheckStatus())
+			{
+				cout << "-----------Answer-----------" << endl;
+				PrintAnswer();
+				if (temp_id != -1)
+				{
+					for (int j = 0; j < 10; j++)
+					{
+						result[temp_id].species_check[j] = RestoreCheck[j];
+					}
+					result[temp_id].species_num = RestoreNum;
+					//this->restore_species();
+					result[temp_id].Known = false;
+				}
+				return;
+			}
 			track_recursion();
-			this->restore_species();
+			for (int j = 0; j < 10; j++)
+			{
+				result[temp_id].species_check[j] = RestoreCheck[j];
+			}
+			result[temp_id].species_num = RestoreNum;
+			//this->restore_species();
+			result[temp_id].Known = false;
 		}
 	}
-	return;
+	//return;
 }
 bool formula::find_goal_symbol() //calculate the min weight of each colum
 {
 	this->update_species();
+	if (contradiction() == false)
+		return false;
+	if (CheckStatus() == true)
+		return true;
+	//限定当前各元素取值范围，包括解决冲突问题等。
 	int Next_Location = 0;
 	int min_factor = 0;
 	bool find_first_min = false;
@@ -179,10 +239,12 @@ bool formula::find_goal_symbol() //calculate the min weight of each colum
 			}
 		}
 	}
+	//找到权值最小的一列
 	if (find_first_min == false)
 	{
-		Last_Symbol = ' ';
-		return false;
+		//意味着都找到了，应该在这之前就跳出。
+			Last_Symbol = ' ';
+			return false;		
 	}
 	if (Next_Location >= N_Add_LenMax)
 	{
@@ -213,11 +275,13 @@ bool formula::find_goal_symbol() //calculate the min weight of each colum
 			Last_Symbol = Pointer_Ans[Next_Location]->layout;
 		}
 	}
+	//找到下一个搜索的字母
+	printf("Change to :=========>%c\n", Last_Symbol);
 	return true;
 }
 void formula::update_species()	//Before Do it add a check accessible func.
 {
-	this->contradiction();
+	//根据进位缩小范围
 	int Temp_Carry = 0;
 	int Sum_Bit = 9 * NK + Temp_Carry;
 	for (int j = 0; j < N_Add_LenMax; j++)
@@ -245,13 +309,14 @@ void formula::update_species()	//Before Do it add a check accessible func.
 					temp_sum = temp_sum + Pointer_N[t][j]->num;
 				}
 				//TODO
-				for (int t = 0; t < Temp_Carry; t++)
+				for (int t = 0; t <= Temp_Carry; t++)
 				{
 					for (int p = 0; p < 10; p++)
 					{
 						Pointer_N[unknown_id][j]->species_check[p] = -1;
 					}
 					Pointer_N[unknown_id][j]->species_num = 0;
+
 					int remainder = t + temp_sum - 10 * (int)((t + temp_sum) / 10);
 					if (remainder <= Pointer_Ans[j]->num)	//think about 9+9+9+9+x = 7
 					{
@@ -264,8 +329,10 @@ void formula::update_species()	//Before Do it add a check accessible func.
 						Pointer_N[unknown_id][j]->species_num++;
 					}
 				}
+				Temp_Carry = (int)(Temp_Carry + temp_sum / 10);
 			}
-			Temp_Carry = (int)(Sum_Bit / 10);
+			else
+				Temp_Carry = (int)(Sum_Bit / 10);
 		}
 		else if(unknown_num == 0)
 		{
@@ -324,10 +391,10 @@ void formula::update_species()	//Before Do it add a check accessible func.
 			
 		}
 	}
-	
 }
-void formula::contradiction() 
+bool formula::contradiction() 
 {
+	//记录当前已经被占用的数字
 	bool flag_all[10] = { false };
 	for (int i = 0; i < symbol_num; i++)
 	{
@@ -336,21 +403,28 @@ void formula::contradiction()
 			flag_all[result[i].num] = true;
 		}
 	}
-
+	//将其他未知字母的被占用数字位设为空
 	for (int j = 0; j < 10; j++)
 	{
 		if (flag_all[j] == true)
 		{
 			for (int i = 0; i < symbol_num; i++)
 			{
-				if (result[i].num != j)
+				if (result[i].num != j && result[i].Known == false&&result[i].species_check[j] == 1)
 				{
 					result[i].species_check[j] = -1;
+					result[i].species_num--;
 				}
 			}
 		}
 	}
-	
+	//检查是否已经有字母无取值选项
+	for (int i = 0; i < symbol_num; i++)
+	{
+		if (result[i].species_num == 0)
+			return false;
+	}
+	return true;
 }
 void formula::restore_species()
 {
@@ -367,10 +441,15 @@ void formula::restore_species()
 		}
 		if (result[i].layout == Last_Symbol)
 		{
-			result[i].Known = false;
-			//TODO:
+			result[i].num = -1;
+			result[i].species_num = 10;
+			for (int j = 0; j < 10; j++)
+			{
+				result[i].species_check[j] = 1;
+			}
 		}
 	}
+
 
 }
 void formula::PrintAnswer()
@@ -398,6 +477,7 @@ bool formula::CheckStatus() {
 			return false;
 		}
 	}
-	PrintAnswer();
+	//TODO: Add SumCheck func
+
 	return true;
 }

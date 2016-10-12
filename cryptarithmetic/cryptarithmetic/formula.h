@@ -12,6 +12,7 @@ public:
 	int N_Add_LenMax;
 	int Carry_Max;
 	char Last_Symbol;
+	char RestoreSymbol;
 	//set the N1 > N2, N3 >= N1
 	int symbol_num;
 	string symbol_layout;
@@ -26,7 +27,7 @@ public:
 	bool find_goal_symbol();
 	void update_species();
 	void restore_species();
-	void contradiction();
+	bool contradiction();
 	void PrintAnswer();
 	bool CheckStatus();
 };
