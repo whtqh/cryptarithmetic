@@ -12,7 +12,7 @@ public:
 	int N_Add_LenMax;
 	int Carry_Max;
 	char Last_Symbol;
-	char RestoreSymbol;
+	int *carry_check;
 	int Track_Depth;
 	//set the N1 > N2, N3 >= N1
 	int symbol_num;
@@ -31,4 +31,5 @@ public:
 	bool contradiction();
 	void PrintAnswer();
 	bool CheckStatus();
+	bool CarryCheck();
 };

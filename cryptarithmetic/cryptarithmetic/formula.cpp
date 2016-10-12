@@ -24,7 +24,7 @@ formula::formula(string *str_in, string str_ans,int k)
 			N_Add_LenMax = N[i];
 	}
 	N_Ans_Len = (int)str_ans.size();
-
+	carry_check = new int[N_Ans_Len];
 	//Find unique list and select known nums
 	symbol_num = 0;
 	symbol_layout = "";
@@ -108,17 +108,6 @@ void formula::track_recursion()
 	
 	if (this->find_goal_symbol() == false)
 	{
-		//Last_Symbol = RestoreSymbol;//有问题，当发现找不到下一个应该找的字母的时候应该怎么处理？
-		//for (int i = 0; i < 10; i++)
-		//{
-		//	//Track_recurision
-		//	if (result[i].layout == Last_Symbol)
-		//	{
-		//		temp_id = i;
-		//		break;
-		//	}
-		//}
-		//result[temp_id].Known = false;
 		return;
 	}
 	Track_Depth++;
@@ -141,7 +130,6 @@ void formula::track_recursion()
 			RestoreCheck[j] = result[temp_id].species_check[j];
 		}
 		result[temp_id].Known = true;
-		RestoreSymbol = Last_Symbol;
 	}
 
 	
@@ -160,23 +148,29 @@ void formula::track_recursion()
 					continue;
 				result[temp_id].species_check[j] = -1;
 			}
-			if (contradiction() == false)
+			//Check if Add the temp_id's value to make up corruption
+			for (int j = 0; j < symbol_num; j++)
 			{
-				if (temp_id != -1)
+				if (result[j].species_num == 1 && result[j].species_check[i] == 1&&result[j].Known == false)
 				{
-					for (int j = 0; j < 10; j++)
+					if (temp_id != -1)
 					{
-						result[temp_id].species_check[j] = RestoreCheck[j];
+							for (int t = 0; t < 10; t++)
+							{
+								result[temp_id].species_check[t] = RestoreCheck[t];
+							}
 					}
+					return;
 				}
-				this->restore_species();
-				continue;
-				//return;
 			}
 			if (CheckStatus())
 			{
-				cout << "-----------Answer-----------" << endl;
-				PrintAnswer();
+				//PrintAnswer();
+				if (CarryCheck() == true)
+				{
+					cout << "-----------Answer-----------" << endl;
+					PrintAnswer();
+				}
 				if (temp_id != -1)
 				{
 					for (int j = 0; j < 10; j++)
@@ -184,7 +178,7 @@ void formula::track_recursion()
 						result[temp_id].species_check[j] = RestoreCheck[j];
 					}
 				}
-				this->restore_species();
+				//this->restore_species();
 				continue;
 			}
 			track_recursion();		//递归函数，有可能因为搜索失败返回并且没有能够初始化。
@@ -193,7 +187,7 @@ void formula::track_recursion()
 		{
 			result[temp_id].species_check[j] = RestoreCheck[j];
 		}
-		restore_species();
+		//restore_species();
 	}
 	result[temp_id].species_num = RestoreNum;	//其实感觉没有什么意义
 	result[temp_id].Known = false;
@@ -429,7 +423,7 @@ bool formula::contradiction()
 				if (result[i].num != j && result[i].Known == false&&result[i].species_check[j] == 1)
 				{
 					result[i].species_check[j] = -1;
-					result[i].species_num--;
+					result[i].species_num--;//最好不要改这个
 				}
 			}
 		}
@@ -482,7 +476,40 @@ bool formula::CheckStatus() {
 			return false;
 		}
 	}
-	//TODO: Add SumCheck func
+	return true;
+}
+bool formula::CarryCheck()
+{
+	//First 0 check:
+	for (int i = 0; i < NK; i++)
+	{
+		if (Pointer_N[i][N[i] - 1]->num == 0)
+			return false;
+	}
+	if (Pointer_Ans[N_Ans_Len - 1] == 0)
+		return false;
 
+	carry_check[0] = 0;
+	for (int i = 0; i < N_Add_LenMax; i++)
+	{
+		int sum_temp = carry_check[i];
+		for (int j = 0; j < NK; j++)
+		{
+			sum_temp += Pointer_N[j][i]->num;
+		}
+		carry_check[i + 1] = (int)(sum_temp / 10);
+		if (Pointer_Ans[i]->num != (sum_temp - carry_check[i + 1] * 10))
+			return false;
+	}
+	if (N_Ans_Len > N_Add_LenMax)
+	{
+		for (int i = N_Add_LenMax; i < N_Ans_Len; i++)
+		{
+			int sum_temp = carry_check[i];
+			carry_check[i + 1] = (int)(sum_temp / 10);
+			if (Pointer_Ans[i]->num != (sum_temp - carry_check[i + 1] * 10))
+				return false;
+		}
+	}
 	return true;
 }
