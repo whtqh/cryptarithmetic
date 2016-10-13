@@ -108,6 +108,7 @@ void formula::track_recursion()
 	
 	if (this->find_goal_symbol() == false)
 	{
+
 		return;
 	}
 	Track_Depth++;
@@ -133,7 +134,7 @@ void formula::track_recursion()
 	}
 
 	
-	for (int i = 0; i < 10; i++)//遍历所有可能进行搜索
+	for (int i = 0; i < 10; i++)		//遍历所有可能进行搜索
 	{
 		
 		if (result[temp_id].species_check[i] == 1)
@@ -160,7 +161,7 @@ void formula::track_recursion()
 								result[temp_id].species_check[t] = RestoreCheck[t];
 							}
 					}
-					return;
+					continue;
 				}
 			}
 			if (CheckStatus())
@@ -276,7 +277,8 @@ bool formula::find_goal_symbol() //calculate the min weight of each colum
 				}
 			}
 		}
-		Last_Symbol = Pointer_N[min_id][Next_Location]->layout;
+		if(min_id != -1)
+			Last_Symbol = Pointer_N[min_id][Next_Location]->layout;
 		if (Pointer_Ans[Next_Location]->Known == false)
 		{
 			if (Pointer_Ans[Next_Location]->species_num <= min_num)
@@ -285,6 +287,7 @@ bool formula::find_goal_symbol() //calculate the min weight of each colum
 			}
 			Last_Symbol = Pointer_Ans[Next_Location]->layout;
 		}
+
 	}
 	//找到下一个搜索的字母
 	//printf("Change to :=========>%c\n", Last_Symbol);
@@ -388,9 +391,9 @@ void formula::update_species()	//Before Do it add a check accessible func.
 				{
 					Pointer_Ans[j]->species_check[p] = -1;
 				}
+				Pointer_Ans[j]->species_num = 0;
 				for (int t = 0; t <= Temp_Carry; t++)
 				{
-					Pointer_Ans[j]->species_num = 0;
 					int temp_c = (int)((Sum_Bit + t - Temp_Carry) / 10);
 					int remainder = Sum_Bit + t - Temp_Carry - 10 * temp_c;
 					Pointer_Ans[j]->species_check[remainder] = 1;

@@ -43,6 +43,16 @@ void main()
 	  9567
 	  1085
 	10652
+	S E N D
+	6 0 5 4          7 8 9 4
+	MO R E
+	1 7 2 0          1 0 3 8
+	G O L D
++ 9 7 3 4        + 2 0 5 4
+	---------   or  ----------
+	MONEY
+	1 7 5 0 8        1 0 9 8 6
+
 	*/
 	My_Formula.track_recursion();
 }
