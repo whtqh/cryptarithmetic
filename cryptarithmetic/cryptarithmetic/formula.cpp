@@ -95,12 +95,15 @@ formula::formula(string *str_in, string str_ans,int k)
 	}
 	//Transform 
 }
+formula::formula() {
+
+}
 formula::~formula()
 {
 	delete []result;
 	delete []constant;
 }
-void formula::track_recursion()
+void formula::plus_track_recursion()
 {
 	int temp_id = -1;
 	int RestoreCheck[10] = { 0 };
@@ -136,7 +139,6 @@ void formula::track_recursion()
 	
 	for (int i = 0; i < 10; i++)		//遍历所有可能进行搜索
 	{
-		
 		if (result[temp_id].species_check[i] == 1)
 		{
 			//printf("*****Depth: [ %d ]*****Type_num = %d\n", Track_Depth,result[temp_id].species_num);
@@ -182,7 +184,7 @@ void formula::track_recursion()
 				//this->restore_species();
 				continue;
 			}
-			track_recursion();		//递归函数，有可能因为搜索失败返回并且没有能够初始化。
+			plus_track_recursion();		//递归函数，有可能因为搜索失败返回并且没有能够初始化。
 		}
 		for (int j = 0; j < 10; j++)
 		{

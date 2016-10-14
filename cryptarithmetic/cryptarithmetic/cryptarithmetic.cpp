@@ -4,6 +4,7 @@
 using namespace std;
 
 #include "formula.h"
+#include "minus_formula.h"
 void main()
 {
 	string *str_in;//using c_str() while printf
@@ -19,40 +20,12 @@ void main()
 	}
 	cin >> str_ans;
 
-	for (int i = 0; i < k; i++)
-	{
-		cout << str_in[i] << endl;
-	}
-	cout << "-------------------" << endl;
-	cout << str_ans << endl;
+	//formula My_Formula = formula(str_in, str_ans, k);
 
-	formula My_Formula = formula(str_in, str_ans, k);
-	/*for (int i = 0; i < k; i++)
-	{
-	for (int j = 0; j < My_Formula.N_Add_LenMax; j++)
-	{
-	cout << My_Formula.Pointer_N[i][j]->num ;
-	}
-	cout << endl;
-	}
-	for (int i = 0; i < My_Formula.N_Ans_Len; i++)
-	{
-	cout << My_Formula.Pointer_Ans[i]->num;
-	}
-	cout << endl;
-	  9567
-	  1085
-	10652
-	S E N D
-	6 0 5 4          7 8 9 4
-	MO R E
-	1 7 2 0          1 0 3 8
-	G O L D
-+ 9 7 3 4        + 2 0 5 4
-	---------   or  ----------
-	MONEY
-	1 7 5 0 8        1 0 9 8 6
+	//My_Formula.plus_track_recursion();
 
-	*/
-	My_Formula.track_recursion();
+	minus_formula Minus_Formula = minus_formula(str_ans, str_in);
+	Minus_Formula.minus_track_recursion();
+
+
 }

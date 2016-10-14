@@ -146,13 +146,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="divide_formula.h" />
     <ClInclude Include="formula.h" />
+    <ClInclude Include="minus_formula.h" />
     <ClInclude Include="symbol.h" />
+    <ClInclude Include="times_formula.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cryptarithmetic.cpp" />
+    <ClCompile Include="divide_formula.cpp" />
     <ClCompile Include="formula.cpp" />
+    <ClCompile Include="minus_formula.cpp" />
     <ClCompile Include="symbol.cpp" />
+    <ClCompile Include="times_formula.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

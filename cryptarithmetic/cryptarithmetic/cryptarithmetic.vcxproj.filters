@@ -21,6 +21,15 @@
     <ClInclude Include="symbol.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="minus_formula.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="times_formula.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="divide_formula.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cryptarithmetic.cpp">
@@ -30,6 +39,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="symbol.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="minus_formula.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="times_formula.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="divide_formula.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
