@@ -5,7 +5,7 @@ times_formula::times_formula(string str_up, string str_down, string *str_in, str
 	// Set Known Constant
 	constant = new symbol[10];
 	result = new symbol[10];
-	int k = str_down.size();		//Diiferent to Plus Formula.
+	int k = (int)str_down.size();		//Diiferent to Plus Formula.
 	Carry_Max = k - 1;
 	NK = k;
 	Track_Depth = 0;
@@ -398,7 +398,81 @@ void times_formula::update_species()
 	}
 
 	//Multiple Check Null first
+	//Õû³ýÊýÂÛ
+	for (int i = 0; i < NK; i++)
+	{
+		int Temp_Sum = 0;
+		bool Divisible = true;
+		if (Pointer_Down[i]->Known == true)
+		{
+			Divisible = false;
+			continue;
+		}
+		for (int j = 0; j < N[i] - i; j++)
+		{
+			if (Pointer_N[i][j]->Known == false)
+			{
+				Divisible = false;
+				break;
+			}
+			Temp_Sum = Temp_Sum + Pointer_N[i][j]->num;
+		}
+		if (Divisible == true)
+		{
+			if (Temp_Sum % 3 != 0)
+			{
+				Pointer_Down[i]->species_check[3] = -1;
+				Pointer_Down[i]->species_check[9] = -1;
+			}
+			if (Pointer_N[i][i]->num % 2 != 0)
+			{
+				for (int j = 0; j < 5; j++)
+				{
+					Pointer_Down[i]->species_check[2 * j] = -1;
+				}
+			}
+			if (Pointer_N[i][i]->num % 5 != 0)
+			{
+				Pointer_Down[i]->species_check[5] = -1;
+				Pointer_Down[i]->species_check[0] = -1;
+			}
+		}
+	}
 
+	//Zero
+	for (int i = 0; i < N_Multi_Down_Len; i++)
+	{
+		if (Pointer_Down[i]->Known == true && Pointer_Down[i]->num == 0)
+		{
+			for (int j = i; j < N[i]; j++)
+			{
+				if (Pointer_N[i][j]->Known == false)
+				{
+					for (int t = 0; t < 10; t++)
+					{
+						Pointer_N[i][j]->species_check[t] = -1;
+					}
+					Pointer_N[i][j]->species_check[0] = 1;
+				}
+			}
+		}
+	}
+	//Last multi
+	if (Pointer_Up[0]->Known == true)
+	{
+		for (int i = 0; i < N_Multi_Down_Len; i++)
+		{
+			if (Pointer_Down[i]->Known == true && Pointer_N[i][i]->Known == false)
+			{
+				for (int t = 0; t < 10; t++)
+				{
+					Pointer_N[i][i]->species_check[t] = -1;
+				}
+				int temp_num = (Pointer_Down[i]->num * Pointer_Up[0]->num) % 10;
+				Pointer_N[i][i]->species_check[ temp_num ] = 1;
+			}
+		}
+	}
 }
 void times_formula::restore_species()
 {
@@ -532,7 +606,21 @@ bool times_formula::CarryCheck()
 			return false;
 	}
 
-
+	int muti_up = 0;
+	for (int j = 0; j < N_Multi_Up_Len;j++)
+	{
+		muti_up = muti_up + Pointer_Up[j]->num * pow(10, j);
+	}
+	for (int i = 0; i < N_Multi_Down_Len; i++)
+	{
+		int muti_ans = 0;
+		for (int j = i; j < N[i]; j++)
+		{
+			muti_ans = muti_ans + Pointer_N[i][j]->num*pow(10, j - i);
+		}
+		if (muti_ans != muti_up * Pointer_Down[i]->num)
+			return false;
+	}
 
 	return true;
 }
