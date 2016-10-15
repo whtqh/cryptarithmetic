@@ -254,6 +254,7 @@ bool formula::find_goal_symbol() //calculate the min weight of each colum
 		}
 	}
 	//找到权值最小的一列
+	//这里的寻找方式在乘法里会改，直接在字母中寻找取值情况最少的一个即可...写的太麻烦了
 	if (find_first_min == false)
 	{
 		//意味着都找到了，应该在这之前就跳出。
