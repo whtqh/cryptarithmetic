@@ -261,7 +261,29 @@ bool times_formula::find_goal_symbol()
 	//检查是否已经遍历所有字母
 
 	//TODO: Add Symbol_num query in turns
-
+	int min_factor = 10;
+	int min_id = -1;
+	for (int i = 0; i < symbol_num; i++)
+	{
+		if (result[i].Known == false)
+		{
+			if (result[i].species_num <= min_factor)
+			{
+				min_id = i;
+				min_factor = result[i].species_num;
+			}
+		}
+	}
+	if (min_id != -1)
+	{
+		Last_Symbol = result[min_id].layout;
+		return true;
+	}
+	else
+	{
+		Last_Symbol = ' ';
+		return false;
+	}
 }
 void times_formula::update_species()
 {
@@ -512,5 +534,5 @@ bool times_formula::CarryCheck()
 
 
 
-	return;
+	return true;
 }
