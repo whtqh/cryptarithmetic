@@ -53,7 +53,7 @@ class divide_formula
 		divide_formula(string str_up, string str_down, string *str_in, string *str_remain, string str_ans);
 		//
 		~divide_formula();
-		void times_track_recurison();
+		void divide_track_recurison();
 
 		bool find_goal_symbol();		//找到下一个搜索的字符
 		void update_species();			//根据当前的进位和已知
