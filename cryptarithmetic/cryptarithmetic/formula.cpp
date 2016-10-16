@@ -51,8 +51,8 @@ formula::formula(string *str_in, string str_ans,int k)
 						symbol_num++;
 					else
 						printf("Unvalid Input para\n");
-					result[size(symbol_layout)].layout = str_in[i][j]; //Add new char
-					Pointer_N[i][N[i] - j - 1] = &result[size(symbol_layout)];
+					result[(symbol_layout).size()].layout = str_in[i][j]; //Add new char
+					Pointer_N[i][N[i] - j - 1] = &result[(symbol_layout).size()];
 					symbol_layout = symbol_layout + str_in[i][j];
 				}
 				else
@@ -81,8 +81,8 @@ formula::formula(string *str_in, string str_ans,int k)
 					symbol_num++;
 				else
 					printf("Unvalid Input para\n");
-				result[size(symbol_layout)].layout = str_ans[i];//Add new char
-				Pointer_Ans[N_Ans_Len - i - 1] = &result[size(symbol_layout)];
+				result[(symbol_layout).size()].layout = str_ans[i];//Add new char
+				Pointer_Ans[N_Ans_Len - i - 1] = &result[(symbol_layout).size()];
 				symbol_layout = symbol_layout + str_ans[i];
 			}
 			else

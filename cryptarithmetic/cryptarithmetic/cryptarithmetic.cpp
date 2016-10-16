@@ -117,7 +117,7 @@ void main()
 {
 	//call_plus_func();
 	//call_minus_func();
-	//call_times_func();
-	call_divide_func();
+	call_times_func();
+	//call_divide_func();
 	return;
 }

@@ -76,8 +76,8 @@ divide_formula::divide_formula(string str_up, string str_down, string *str_in, s
 						symbol_num++;
 					else
 						printf("Unvalid Input para\n");
-					result[size(symbol_layout)].layout = str_in[i][j]; //Add new char
-					Pointer_N[i][N[i] - j - 1] = &result[size(symbol_layout)];
+					result[(symbol_layout).size()].layout = str_in[i][j]; //Add new char
+					Pointer_N[i][N[i] - j - 1] = &result[(symbol_layout).size()];
 					symbol_layout = symbol_layout + str_in[i][j];
 				}
 				else
@@ -108,8 +108,8 @@ divide_formula::divide_formula(string str_up, string str_down, string *str_in, s
 						symbol_num++;
 					else
 						printf("Unvalid Input para\n");
-					result[size(symbol_layout)].layout = str_remain[i][j]; //Add new char
-					Pointer_R[i][R[i] - j - 1] = &result[size(symbol_layout)];
+					result[(symbol_layout).size()].layout = str_remain[i][j]; //Add new char
+					Pointer_R[i][R[i] - j - 1] = &result[(symbol_layout).size()];
 					symbol_layout = symbol_layout + str_remain[i][j];
 				}
 				else
@@ -138,8 +138,8 @@ divide_formula::divide_formula(string str_up, string str_down, string *str_in, s
 					symbol_num++;
 				else
 					printf("Unvalid Input para\n");
-				result[size(symbol_layout)].layout = str_ans[i];//Add new char
-				Pointer_Ans[N_Ans_Len - i - 1] = &result[size(symbol_layout)];
+				result[(symbol_layout).size()].layout = str_ans[i];//Add new char
+				Pointer_Ans[N_Ans_Len - i - 1] = &result[(symbol_layout).size()];
 				symbol_layout = symbol_layout + str_ans[i];
 			}
 			else
@@ -162,8 +162,8 @@ divide_formula::divide_formula(string str_up, string str_down, string *str_in, s
 					symbol_num++;
 				else
 					printf("Unvalid Input para\n");
-				result[size(symbol_layout)].layout = str_up[i];
-				Pointer_Up[N_Multi_Up_Len - i - 1] = &result[size(symbol_layout)];
+				result[(symbol_layout).size()].layout = str_up[i];
+				Pointer_Up[N_Multi_Up_Len - i - 1] = &result[(symbol_layout).size()];
 				symbol_layout = symbol_layout + str_up[i];
 			}
 			else
@@ -186,8 +186,8 @@ divide_formula::divide_formula(string str_up, string str_down, string *str_in, s
 					symbol_num++;
 				else
 					printf("Unvalid Input para\n");
-				result[size(symbol_layout)].layout = str_down[i];
-				Pointer_Down[N_Multi_Down_Len - i - 1] = &result[size(symbol_layout)];
+				result[(symbol_layout).size()].layout = str_down[i];
+				Pointer_Down[N_Multi_Down_Len - i - 1] = &result[(symbol_layout).size()];
 				symbol_layout = symbol_layout + str_down[i];
 			}
 			else

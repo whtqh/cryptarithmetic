@@ -1,38 +1,38 @@
-#pragma once
+ï»¿#pragma once
 #include "formula.h"
 using namespace std;
 
 class divide_formula
 {
 	public:
-		int *N;								//¼ÓÊıÃ¿Ò»ĞĞµÄ×Ö·ûÊıÁ¿
+		int *N;								//åŠ æ•°æ¯ä¸€è¡Œçš„å­—ç¬¦æ•°é‡
 		int *R;
 
-		int NK;								//¶àÉÙĞĞ
+		int NK;								//å¤šå°‘è¡Œ
 		
-		int N_Ans_Len;					//ºÍµÄ³¤¶È
-		int N_Add_LenMax;			//¼ÓÊıµÄ×î³¤µÄ³¤¶È
-		int R_Add_LenMax;			//ÓàÊıµÄ×î³¤µÄ³¤¶È
+		int N_Ans_Len;					//å’Œçš„é•¿åº¦
+		int N_Add_LenMax;			//åŠ æ•°çš„æœ€é•¿çš„é•¿åº¦
+		int R_Add_LenMax;			//ä½™æ•°çš„æœ€é•¿çš„é•¿åº¦
 
 		int N_Multi_Up_Len;
 		int N_Multi_Down_Len;
 
-		int Carry_Max;					//½øÎ»µÄ×î´óÖµ unused
-		char Last_Symbol;			//µ±Ç°ËÑË÷µÄ×Ö·û
-		int *carry_check;				//ÑéËãµÄ½øÎ»Êı×é
-		int Track_Depth;				//µ±Ç°µİ¹éµÄÉî¶È
+		int Carry_Max;					//è¿›ä½çš„æœ€å¤§å€¼ unused
+		char Last_Symbol;			//å½“å‰æœç´¢çš„å­—ç¬¦
+		int *carry_check;				//éªŒç®—çš„è¿›ä½æ•°ç»„
+		int Track_Depth;				//å½“å‰é€’å½’çš„æ·±åº¦
 
-		int symbol_num;				//×Ö·ûµÄÊıÁ¿
-		string symbol_layout;		//Êı×é¶ÔÓ¦µÄ×Ö·û´®
-		symbol *result;				//´æsymbolµÄÊı×é
-		symbol *constant;			//´æ³£ÊıµÄÊı×é
-		symbol ***Pointer_N;		//¼ÓÊıµÄÖ¸ÕëµÄ¶şÎ¬Êı×é
+		int symbol_num;				//å­—ç¬¦çš„æ•°é‡
+		string symbol_layout;		//æ•°ç»„å¯¹åº”çš„å­—ç¬¦ä¸²
+		symbol *result;				//å­˜symbolçš„æ•°ç»„
+		symbol *constant;			//å­˜å¸¸æ•°çš„æ•°ç»„
+		symbol ***Pointer_N;		//åŠ æ•°çš„æŒ‡é’ˆçš„äºŒç»´æ•°ç»„
 		//Add remainder from multiple
-		symbol ***Pointer_R;		//ÓàÊıµÄÖ¸ÕëµÄ¶şÎ¬Êı×é
+		symbol ***Pointer_R;		//ä½™æ•°çš„æŒ‡é’ˆçš„äºŒç»´æ•°ç»„
 
-		symbol **Pointer_Ans;		//ºÍµÄÖ¸ÕëµÄÒ»Î¬Êı×é
-		symbol **Pointer_Up;		//±»³ËÊıµÄÖ¸ÕëµÄÒ»Î¬Êı×é
-		symbol **Pointer_Down;	//³ËÊıµÄÖ¸ÕëµÄÒ»Î¬Êı×é
+		symbol **Pointer_Ans;		//å’Œçš„æŒ‡é’ˆçš„ä¸€ç»´æ•°ç»„
+		symbol **Pointer_Up;		//è¢«ä¹˜æ•°çš„æŒ‡é’ˆçš„ä¸€ç»´æ•°ç»„
+		symbol **Pointer_Down;	//ä¹˜æ•°çš„æŒ‡é’ˆçš„ä¸€ç»´æ•°ç»„
 
 		/*						DEFGH						<-	str_down
 	str_up  ABCD | XXXXXXXXXXXX			<-	str_ans
@@ -55,8 +55,8 @@ class divide_formula
 		~divide_formula();
 		void divide_track_recurison();
 
-		bool find_goal_symbol();		//ÕÒµ½ÏÂÒ»¸öËÑË÷µÄ×Ö·û
-		void update_species();			//¸ù¾İµ±Ç°µÄ½øÎ»ºÍÒÑÖª
+		bool find_goal_symbol();		//æ‰¾åˆ°ä¸‹ä¸€ä¸ªæœç´¢çš„å­—ç¬¦
+		void update_species();			//æ ¹æ®å½“å‰çš„è¿›ä½å’Œå·²çŸ¥
 		void restore_species();
 		bool contradiction();
 		void PrintAnswer();

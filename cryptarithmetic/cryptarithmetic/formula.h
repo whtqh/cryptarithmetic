@@ -1,6 +1,7 @@
 #pragma once
 #include "symbol.h"
 #include <string>
+#include <math.h>
 using namespace std;
 
 class formula
