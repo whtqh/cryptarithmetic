@@ -1,0 +1,4 @@
+#ifndef PUZZLEBUTTON_H
+#define PUZZLEBUTTON_H
+
+#endif // PUZZLEBUTTON_H
