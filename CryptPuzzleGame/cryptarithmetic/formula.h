@@ -2,8 +2,9 @@
 #include "symbol.h"
 #include <string>
 #include <math.h>
+#include <puzzlebutton.h>
 using namespace std;
-
+#define ANSWER_MAX_NUM 100
 class formula
 {
 public:
@@ -23,6 +24,10 @@ public:
 	symbol ***Pointer_N;	//加数的指针的二维数组
 	symbol **Pointer_Ans;	//和的指针的一维数组
 	
+    int **answer;
+    int answer_num;
+
+
 	formula(string *str_in, string str_ans, int k);
 	formula();
 	~formula();

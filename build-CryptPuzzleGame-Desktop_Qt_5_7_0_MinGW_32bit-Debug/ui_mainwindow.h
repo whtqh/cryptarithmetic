@@ -13,14 +13,14 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -30,66 +30,115 @@ class Ui_MainWindow
 public:
     QWidget *centralWidget;
     QGraphicsView *graphicsView;
+    QProgressBar *progressBar;
     QWidget *widget;
-    QFormLayout *formLayout;
+    QVBoxLayout *verticalLayout;
     QPushButton *Button0;
     QPushButton *Button1;
     QPushButton *Button2;
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
+    QPushButton *Button3;
+    QPushButton *Button4;
+    QWidget *widget1;
+    QHBoxLayout *horizontalLayout;
+    QPushButton *Button_clear;
+    QPushButton *Button_quit;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(531, 428);
+        MainWindow->setMinimumSize(QSize(1080, 720));
+        MainWindow->setStyleSheet(QStringLiteral(""));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(10, 20, 371, 341));
-        graphicsView->setStyleSheet(QLatin1String("border-color: rgb(36, 36, 36);\n"
-"gridline-color: rgb(217, 217, 217);"));
+        graphicsView->setGeometry(QRect(21, 21, 800, 600));
+        graphicsView->setMinimumSize(QSize(800, 600));
+        graphicsView->setStyleSheet(QStringLiteral("background-image: url(:/image/main_bg);"));
         graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+        progressBar = new QProgressBar(centralWidget);
+        progressBar->setObjectName(QStringLiteral("progressBar"));
+        progressBar->setGeometry(QRect(20, 650, 841, 23));
+        progressBar->setValue(0);
         widget = new QWidget(centralWidget);
         widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(420, 90, 102, 100));
-        formLayout = new QFormLayout(widget);
-        formLayout->setSpacing(6);
-        formLayout->setContentsMargins(11, 11, 11, 11);
-        formLayout->setObjectName(QStringLiteral("formLayout"));
-        formLayout->setContentsMargins(0, 0, 0, 0);
+        widget->setGeometry(QRect(850, 20, 201, 530));
+        verticalLayout = new QVBoxLayout(widget);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
         Button0 = new QPushButton(widget);
         Button0->setObjectName(QStringLiteral("Button0"));
+        Button0->setMinimumSize(QSize(160, 100));
+        Button0->setStyleSheet(QStringLiteral("background-image: url(:/image/button_01);"));
 
-        formLayout->setWidget(0, QFormLayout::LabelRole, Button0);
+        verticalLayout->addWidget(Button0);
 
         Button1 = new QPushButton(widget);
         Button1->setObjectName(QStringLiteral("Button1"));
+        Button1->setMinimumSize(QSize(160, 100));
+        Button1->setStyleSheet(QStringLiteral("background-image: url(:/image/button_02);"));
 
-        formLayout->setWidget(1, QFormLayout::LabelRole, Button1);
+        verticalLayout->addWidget(Button1);
 
         Button2 = new QPushButton(widget);
         Button2->setObjectName(QStringLiteral("Button2"));
+        Button2->setMinimumSize(QSize(160, 100));
+        Button2->setStyleSheet(QStringLiteral("background-image: url(:/image/button_03);"));
 
-        formLayout->setWidget(2, QFormLayout::LabelRole, Button2);
+        verticalLayout->addWidget(Button2);
+
+        Button3 = new QPushButton(widget);
+        Button3->setObjectName(QStringLiteral("Button3"));
+        Button3->setMinimumSize(QSize(160, 100));
+        Button3->setStyleSheet(QLatin1String("background-image: url(:/image/button_04);\n"
+""));
+
+        verticalLayout->addWidget(Button3);
+
+        Button4 = new QPushButton(widget);
+        Button4->setObjectName(QStringLiteral("Button4"));
+        Button4->setMinimumSize(QSize(160, 100));
+        Button4->setStyleSheet(QStringLiteral("background-image: url(:/image/button_05);"));
+        Button4->setFlat(false);
+
+        verticalLayout->addWidget(Button4);
+
+        widget1 = new QWidget(centralWidget);
+        widget1->setObjectName(QStringLiteral("widget1"));
+        widget1->setGeometry(QRect(850, 560, 199, 62));
+        horizontalLayout = new QHBoxLayout(widget1);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        Button_clear = new QPushButton(widget1);
+        Button_clear->setObjectName(QStringLiteral("Button_clear"));
+        Button_clear->setMinimumSize(QSize(95, 60));
+        Button_clear->setStyleSheet(QStringLiteral("background-image: url(:/image/button_clear);"));
+        Button_clear->setFlat(false);
+
+        horizontalLayout->addWidget(Button_clear);
+
+        Button_quit = new QPushButton(widget1);
+        Button_quit->setObjectName(QStringLiteral("Button_quit"));
+        Button_quit->setEnabled(true);
+        Button_quit->setMinimumSize(QSize(95, 60));
+        Button_quit->setStyleSheet(QStringLiteral("background-image: url(:/image/button_quit);"));
+
+        horizontalLayout->addWidget(Button_quit);
 
         MainWindow->setCentralWidget(centralWidget);
-        Button0->raise();
-        Button1->raise();
-        Button2->raise();
-        Button2->raise();
-        Button1->raise();
-        Button0->raise();
         graphicsView->raise();
-        menuBar = new QMenuBar(MainWindow);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 531, 26));
-        MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
+        Button2->raise();
+        Button3->raise();
+        Button4->raise();
+        progressBar->raise();
+        Button_clear->raise();
+        Button_quit->raise();
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
@@ -102,9 +151,13 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
-        Button0->setText(QApplication::translate("MainWindow", "PushButton", 0));
-        Button1->setText(QApplication::translate("MainWindow", "PushButton", 0));
-        Button2->setText(QApplication::translate("MainWindow", "PushButton", 0));
+        Button0->setText(QString());
+        Button1->setText(QString());
+        Button2->setText(QString());
+        Button3->setText(QString());
+        Button4->setText(QString());
+        Button_clear->setText(QString());
+        Button_quit->setText(QString());
     } // retranslateUi
 
 };

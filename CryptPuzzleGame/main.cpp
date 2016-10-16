@@ -5,12 +5,11 @@
 #include <QGraphicsItem>
 #include <QGraphicsView>
 #include <QGridLayout>
-#include "Game.h"
 #include "cryptarithmetic/cryptarithmetic.h"
 
 
 
-Game * game;
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -18,6 +17,8 @@ int main(int argc, char *argv[])
 
     game.setFixedSize(1080,720);
     game.show();
+    game.FormulaPlusRead();
 
+    //game.FormulaShow();
     return a.exec();
 }

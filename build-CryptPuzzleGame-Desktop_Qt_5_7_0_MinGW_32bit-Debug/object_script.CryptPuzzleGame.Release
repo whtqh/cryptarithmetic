@@ -7,7 +7,7 @@ INPUT(
 ./release\minus_formula.o
 ./release\symbol.o
 ./release\times_formula.o
-./release\Game.o
 ./release\PuzzleButton.o
+./release\qrc_res.o
 ./release\moc_mainwindow.o
 );

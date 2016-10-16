@@ -2,6 +2,9 @@
 
 formula::formula(string *str_in, string str_ans,int k)
 {
+    answer = new int*[ANSWER_MAX_NUM];
+    answer_num = 0;
+
 	// Set Known Constant
 	constant = new symbol[10];
 	result = new symbol[10];
@@ -459,6 +462,12 @@ void formula::restore_species()
 }
 void formula::PrintAnswer()
 {
+    answer[answer_num] = new int[10];
+    for(int i = 0;i<10;i++)
+    {
+        answer[answer_num][i] = result[i].num;
+    }
+    answer_num ++;
 	for (int i = 0; i < NK; i++)
 	{
 	for (int j = 0; j < N_Add_LenMax; j++)

@@ -20,7 +20,6 @@ SOURCES += main.cpp\
     cryptarithmetic/minus_formula.cpp \
     cryptarithmetic/symbol.cpp \
     cryptarithmetic/times_formula.cpp \
-    Game.cpp \
     PuzzleButton.cpp
 
 HEADERS  += mainwindow.h \
@@ -30,7 +29,6 @@ HEADERS  += mainwindow.h \
     cryptarithmetic/symbol.h \
     cryptarithmetic/times_formula.h \
     cryptarithmetic/cryptarithmetic.h \
-    Game.h \
     PuzzleButton.h
 
 FORMS    += mainwindow.ui
@@ -53,3 +51,6 @@ DISTFILES += \
     cryptarithmetic/cryptarithmetic.vcxproj.filters \
     cryptarithmetic/theory.vcxproj \
     cryptarithmetic/Debug/cryptarithmetic.log
+
+RESOURCES += \
+    res.qrc

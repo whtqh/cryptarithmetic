@@ -1,1 +1,12 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/image">
+        <file alias="main_bg">pic/bg_main.jpg</file>
+        <file alias="button_01">pic/button_01.png</file>
+        <file alias="button_02">pic/button_02.png</file>
+        <file alias="button_03">pic/button_03.png</file>
+        <file alias="button_04">pic/button_04.png</file>
+        <file alias="button_05">pic/button_05.png</file>
+        <file alias="button_clear">pic/button_clear.png</file>
+        <file alias="button_quit">pic/button_quit.png</file>
+    </qresource>
+</RCC>

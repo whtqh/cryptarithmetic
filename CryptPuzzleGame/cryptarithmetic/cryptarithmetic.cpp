@@ -1,20 +1,24 @@
 #include "cryptarithmetic.h"
-void call_plus_func()
+void call_plus_func(string filepath)
 {
+    ifstream fin(filepath);
+
+
 	string *str_in;
 	string str_ans;
 	int k = 0;
-	cout << "Input : k =  ";
-	cin >> k;
-	cout << "Input " << k << " string as Addend and a sum like SEND + MORE = MONEY" << endl;
+    //cout << "Input : k =  ";
+    fin >> k;
+    //cout << "Input " << k << " string as Addend and a sum like SEND + MORE = MONEY" << endl;
 	str_in = new string[k];
 	for (int i = 0; i < k; i++)
 	{
-		cin >> str_in[i];
+        fin >> str_in[i];
 	}
-	cin >> str_ans;
-	formula My_Formula = formula(str_in, str_ans, k);
-	My_Formula.plus_track_recursion();
+    fin >> str_ans;
+    formula temp_Formula =  formula(str_in, str_ans, k);
+    temp_Formula.plus_track_recursion();
+    //My_Formula = &temp_Formula;
 	
 }
 void call_minus_func()

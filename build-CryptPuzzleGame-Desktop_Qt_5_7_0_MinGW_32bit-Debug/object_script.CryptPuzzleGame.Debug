@@ -7,7 +7,7 @@ INPUT(
 ./debug\minus_formula.o
 ./debug\symbol.o
 ./debug\times_formula.o
-./debug\Game.o
 ./debug\PuzzleButton.o
+./debug\qrc_res.o
 ./debug\moc_mainwindow.o
 );

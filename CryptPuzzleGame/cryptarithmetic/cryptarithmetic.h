@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <string>
+#include <fstream>
 using namespace std;
 
 #include "formula.h"
@@ -11,7 +12,7 @@ using namespace std;
 #include "times_formula.h"
 #include "divide_formula.h"
 
-void call_plus_func();
+void call_plus_func(string filepath);
 void call_minus_func();
 void call_times_func();
 void call_divide_func();
