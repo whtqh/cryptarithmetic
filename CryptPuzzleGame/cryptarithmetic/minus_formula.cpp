@@ -1,4 +1,4 @@
-#include "minus_formula.h"
+﻿#include "minus_formula.h"
 
 void minus_formula::minus_track_recursion()
 {

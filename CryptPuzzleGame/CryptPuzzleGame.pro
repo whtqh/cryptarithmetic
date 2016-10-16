@@ -19,7 +19,9 @@ SOURCES += main.cpp\
     cryptarithmetic/formula.cpp \
     cryptarithmetic/minus_formula.cpp \
     cryptarithmetic/symbol.cpp \
-    cryptarithmetic/times_formula.cpp
+    cryptarithmetic/times_formula.cpp \
+    Game.cpp \
+    PuzzleButton.cpp
 
 HEADERS  += mainwindow.h \
     cryptarithmetic/divide_formula.h \
@@ -27,7 +29,9 @@ HEADERS  += mainwindow.h \
     cryptarithmetic/minus_formula.h \
     cryptarithmetic/symbol.h \
     cryptarithmetic/times_formula.h \
-    cryptarithmetic/cryptarithmetic.h
+    cryptarithmetic/cryptarithmetic.h \
+    Game.h \
+    PuzzleButton.h
 
 FORMS    += mainwindow.ui
 

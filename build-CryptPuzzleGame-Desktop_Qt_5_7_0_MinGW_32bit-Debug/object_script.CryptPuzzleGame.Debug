@@ -1,0 +1,13 @@
+INPUT(
+./debug\main.o
+./debug\mainwindow.o
+./debug\cryptarithmetic.o
+./debug\divide_formula.o
+./debug\formula.o
+./debug\minus_formula.o
+./debug\symbol.o
+./debug\times_formula.o
+./debug\Game.o
+./debug\PuzzleButton.o
+./debug\moc_mainwindow.o
+);

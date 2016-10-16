@@ -1,4 +1,4 @@
-#include "formula.h"
+ï»¿#include "formula.h"
 
 formula::formula(string *str_in, string str_ans,int k)
 {
@@ -125,7 +125,7 @@ void formula::plus_track_recursion()
 			break;
 		}
 	}
-	//ÕÒµ½ÉÏÒ»´Îµİ¹éÖĞ¾ö¶¨µÄÏÂÒ»¸öÒªÕÒµÄ×ÖÄ¸Î»ÖÃ
+	//æ‰¾åˆ°ä¸Šä¸€æ¬¡é€’å½’ä¸­å†³å®šçš„ä¸‹ä¸€ä¸ªè¦æ‰¾çš„å­—æ¯ä½ç½®
 	if (temp_id != -1)
 	{
 		RestoreNum = result[temp_id].species_num;
@@ -137,7 +137,7 @@ void formula::plus_track_recursion()
 	}
 
 	
-	for (int i = 0; i < 10; i++)		//±éÀúËùÓĞ¿ÉÄÜ½øĞĞËÑË÷
+	for (int i = 0; i < 10; i++)		//éå†æ‰€æœ‰å¯èƒ½è¿›è¡Œæœç´¢
 	{
 		if (result[temp_id].species_check[i] == 1)
 		{
@@ -184,7 +184,7 @@ void formula::plus_track_recursion()
 				//this->restore_species();
 				continue;
 			}
-			plus_track_recursion();		//µİ¹éº¯Êı£¬ÓĞ¿ÉÄÜÒòÎªËÑË÷Ê§°Ü·µ»Ø²¢ÇÒÃ»ÓĞÄÜ¹»³õÊ¼»¯¡£
+			plus_track_recursion();		//é€’å½’å‡½æ•°ï¼Œæœ‰å¯èƒ½å› ä¸ºæœç´¢å¤±è´¥è¿”å›å¹¶ä¸”æ²¡æœ‰èƒ½å¤Ÿåˆå§‹åŒ–ã€‚
 		}
 		for (int j = 0; j < 10; j++)
 		{
@@ -192,24 +192,24 @@ void formula::plus_track_recursion()
 		}
 		//restore_species();
 	}
-	result[temp_id].species_num = RestoreNum;	//ÆäÊµ¸Ğ¾õÃ»ÓĞÊ²Ã´ÒâÒå
+	result[temp_id].species_num = RestoreNum;	//å…¶å®æ„Ÿè§‰æ²¡æœ‰ä»€ä¹ˆæ„ä¹‰
 	result[temp_id].Known = false;
-	this->restore_species();	//¿Ó±Èº¯Êı
+	this->restore_species();	//å‘æ¯”å‡½æ•°
 	Track_Depth--;
 	return;
 }
 bool formula::find_goal_symbol() //calculate the min weight of each colum
 {
 	this->update_species();	
-	//ËõĞ¡µ±Ç°È¡Öµ·¶Î§
+	//ç¼©å°å½“å‰å–å€¼èŒƒå›´
 	if (contradiction() == false)
 		return false;
-	//Èç¹û·¢ÏÖÈ¡ÖµÃ¬¶Ü£¬ÍË³ö
+	//å¦‚æœå‘ç°å–å€¼çŸ›ç›¾ï¼Œé€€å‡º
 	if (CheckStatus() == true)
 		return true;
-	//¼ì²éÊÇ·ñÒÑ¾­±éÀúËùÓĞ×ÖÄ¸
+	//æ£€æŸ¥æ˜¯å¦å·²ç»éå†æ‰€æœ‰å­—æ¯
 
-	//ÏŞ¶¨µ±Ç°¸÷ÔªËØÈ¡Öµ·¶Î§£¬°üÀ¨½â¾ö³åÍ»ÎÊÌâµÈ¡£
+	//é™å®šå½“å‰å„å…ƒç´ å–å€¼èŒƒå›´ï¼ŒåŒ…æ‹¬è§£å†³å†²çªé—®é¢˜ç­‰ã€‚
 	int Next_Location = 0;
 	int min_factor = 0;
 	bool find_first_min = false;
@@ -253,11 +253,11 @@ bool formula::find_goal_symbol() //calculate the min weight of each colum
 			}
 		}
 	}
-	//ÕÒµ½È¨Öµ×îĞ¡µÄÒ»ÁĞ
-	//ÕâÀïµÄÑ°ÕÒ·½Ê½ÔÚ³Ë·¨Àï»á¸Ä£¬Ö±½ÓÔÚ×ÖÄ¸ÖĞÑ°ÕÒÈ¡ÖµÇé¿ö×îÉÙµÄÒ»¸ö¼´¿É...Ğ´µÄÌ«Âé·³ÁË
+	//æ‰¾åˆ°æƒå€¼æœ€å°çš„ä¸€åˆ—
+	//è¿™é‡Œçš„å¯»æ‰¾æ–¹å¼åœ¨ä¹˜æ³•é‡Œä¼šæ”¹ï¼Œç›´æ¥åœ¨å­—æ¯ä¸­å¯»æ‰¾å–å€¼æƒ…å†µæœ€å°‘çš„ä¸€ä¸ªå³å¯...å†™çš„å¤ªéº»çƒ¦äº†
 	if (find_first_min == false)
 	{
-		//ÒâÎ¶×Å¶¼ÕÒµ½ÁË£¬Ó¦¸ÃÔÚÕâÖ®Ç°¾ÍÌø³ö¡£
+		//æ„å‘³ç€éƒ½æ‰¾åˆ°äº†ï¼Œåº”è¯¥åœ¨è¿™ä¹‹å‰å°±è·³å‡ºã€‚
 			Last_Symbol = ' ';
 			return false;		
 	}
@@ -292,13 +292,13 @@ bool formula::find_goal_symbol() //calculate the min weight of each colum
 		}
 
 	}
-	//ÕÒµ½ÏÂÒ»¸öËÑË÷µÄ×ÖÄ¸
+	//æ‰¾åˆ°ä¸‹ä¸€ä¸ªæœç´¢çš„å­—æ¯
 	//printf("Change to :=========>%c\n", Last_Symbol);
 	return true;
 }
 void formula::update_species()	//Before Do it add a check accessible func.
 {
-	//¸ù¾İ½øÎ»ËõĞ¡·¶Î§
+	//æ ¹æ®è¿›ä½ç¼©å°èŒƒå›´
 	int Temp_Carry = 0;
 	int Sum_Bit = 9 * NK + Temp_Carry;
 	for (int j = 0; j < N_Add_LenMax; j++)
@@ -410,7 +410,7 @@ void formula::update_species()	//Before Do it add a check accessible func.
 }
 bool formula::contradiction() 
 {
-	//¼ÇÂ¼µ±Ç°ÒÑ¾­±»Õ¼ÓÃµÄÊı×Ö
+	//è®°å½•å½“å‰å·²ç»è¢«å ç”¨çš„æ•°å­—
 	bool flag_all[10] = { false };
 	for (int i = 0; i < symbol_num; i++)
 	{
@@ -419,7 +419,7 @@ bool formula::contradiction()
 			flag_all[result[i].num] = true;
 		}
 	}
-	//½«ÆäËûÎ´Öª×ÖÄ¸µÄ±»Õ¼ÓÃÊı×ÖÎ»ÉèÎª¿Õ
+	//å°†å…¶ä»–æœªçŸ¥å­—æ¯çš„è¢«å ç”¨æ•°å­—ä½è®¾ä¸ºç©º
 	for (int j = 0; j < 10; j++)
 	{
 		if (flag_all[j] == true)
@@ -429,12 +429,12 @@ bool formula::contradiction()
 				if (result[i].num != j && result[i].Known == false&&result[i].species_check[j] == 1)
 				{
 					result[i].species_check[j] = -1;
-					result[i].species_num--;//×îºÃ²»Òª¸ÄÕâ¸ö
+					result[i].species_num--;//æœ€å¥½ä¸è¦æ”¹è¿™ä¸ª
 				}
 			}
 		}
 	}
-	//¼ì²éÊÇ·ñÒÑ¾­ÓĞ×ÖÄ¸ÎŞÈ¡ÖµÑ¡Ïî
+	//æ£€æŸ¥æ˜¯å¦å·²ç»æœ‰å­—æ¯æ— å–å€¼é€‰é¡¹
 	for (int i = 0; i < symbol_num; i++)
 	{
 		if (result[i].species_num == 0)

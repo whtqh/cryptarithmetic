@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "symbol.h"
 #include <string>
 #include <math.h>
@@ -7,28 +7,28 @@ using namespace std;
 class formula
 {
 public:
-	int *N;     //¼ÓÊıÃ¿Ò»ĞĞµÄ×Ö·ûÊıÁ¿
-	int NK;		//¶àÉÙĞĞ
-	int N_Ans_Len;	//ºÍµÄ³¤¶È
-	int N_Add_LenMax;	//¼ÓÊıµÄ×î³¤µÄ³¤¶È
-	int Carry_Max;			//½øÎ»µÄ×î´óÖµ unused
-	char Last_Symbol;	//µ±Ç°ËÑË÷µÄ×Ö·û
-	int *carry_check;		//ÑéËãµÄ½øÎ»Êı×é
-	int Track_Depth;		//µ±Ç°µİ¹éµÄÉî¶È
+	int *N;     //åŠ æ•°æ¯ä¸€è¡Œçš„å­—ç¬¦æ•°é‡
+	int NK;		//å¤šå°‘è¡Œ
+	int N_Ans_Len;	//å’Œçš„é•¿åº¦
+	int N_Add_LenMax;	//åŠ æ•°çš„æœ€é•¿çš„é•¿åº¦
+	int Carry_Max;			//è¿›ä½çš„æœ€å¤§å€¼ unused
+	char Last_Symbol;	//å½“å‰æœç´¢çš„å­—ç¬¦
+	int *carry_check;		//éªŒç®—çš„è¿›ä½æ•°ç»„
+	int Track_Depth;		//å½“å‰é€’å½’çš„æ·±åº¦
 	//set the N1 > N2, N3 >= N1
-	int symbol_num;		//×Ö·ûµÄÊıÁ¿
-	string symbol_layout;	//Êı×é¶ÔÓ¦µÄ×Ö·û´®
-	symbol *result;			//´æsymbolµÄÊı×é
-	symbol *constant;		//´æ³£ÊıµÄÊı×é
-	symbol ***Pointer_N;	//¼ÓÊıµÄÖ¸ÕëµÄ¶şÎ¬Êı×é
-	symbol **Pointer_Ans;	//ºÍµÄÖ¸ÕëµÄÒ»Î¬Êı×é
+	int symbol_num;		//å­—ç¬¦çš„æ•°é‡
+	string symbol_layout;	//æ•°ç»„å¯¹åº”çš„å­—ç¬¦ä¸²
+	symbol *result;			//å­˜symbolçš„æ•°ç»„
+	symbol *constant;		//å­˜å¸¸æ•°çš„æ•°ç»„
+	symbol ***Pointer_N;	//åŠ æ•°çš„æŒ‡é’ˆçš„äºŒç»´æ•°ç»„
+	symbol **Pointer_Ans;	//å’Œçš„æŒ‡é’ˆçš„ä¸€ç»´æ•°ç»„
 	
 	formula(string *str_in, string str_ans, int k);
 	formula();
 	~formula();
-	void plus_track_recursion();	//µİ¹éº¯Êı
-	bool find_goal_symbol();		//ÕÒµ½ÏÂÒ»¸öËÑË÷µÄ×Ö·û
-	void update_species();			//¸ù¾İµ±Ç°µÄ½øÎ»ºÍÒÑÖª
+	void plus_track_recursion();	//é€’å½’å‡½æ•°
+	bool find_goal_symbol();		//æ‰¾åˆ°ä¸‹ä¸€ä¸ªæœç´¢çš„å­—ç¬¦
+	void update_species();			//æ ¹æ®å½“å‰çš„è¿›ä½å’Œå·²çŸ¥
 	void restore_species();
 	bool contradiction();
 	void PrintAnswer();

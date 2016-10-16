@@ -1,4 +1,4 @@
-#include "divide_formula.h"
+ï»¿#include "divide_formula.h"
 using namespace std;
 
 divide_formula::divide_formula(string str_up, string str_down, string *str_in, string *str_remain, string str_ans)
@@ -229,7 +229,7 @@ void divide_formula::divide_track_recurison()
 			break;
 		}
 	}
-	//ÕÒµ½ÉÏÒ»´Îµİ¹éÖĞ¾ö¶¨µÄÏÂÒ»¸öÒªÕÒµÄ×ÖÄ¸Î»ÖÃ
+	//æ‰¾åˆ°ä¸Šä¸€æ¬¡é€’å½’ä¸­å†³å®šçš„ä¸‹ä¸€ä¸ªè¦æ‰¾çš„å­—æ¯ä½ç½®
 	if (temp_id != -1)
 	{
 		RestoreNum = result[temp_id].species_num;
@@ -241,7 +241,7 @@ void divide_formula::divide_track_recurison()
 	}
 
 
-	for (int i = 0; i < 10; i++)		//±éÀúËùÓĞ¿ÉÄÜ½øĞĞËÑË÷
+	for (int i = 0; i < 10; i++)		//éå†æ‰€æœ‰å¯èƒ½è¿›è¡Œæœç´¢
 	{
 		if (result[temp_id].species_check[i] == 1)
 		{
@@ -287,29 +287,29 @@ void divide_formula::divide_track_recurison()
 				}
 				continue;
 			}
-			divide_track_recurison();	//µİ¹éº¯Êı£¬ÓĞ¿ÉÄÜÒòÎªËÑË÷Ê§°Ü·µ»Ø²¢ÇÒÃ»ÓĞÄÜ¹»³õÊ¼»¯¡£
+			divide_track_recurison();	//é€’å½’å‡½æ•°ï¼Œæœ‰å¯èƒ½å› ä¸ºæœç´¢å¤±è´¥è¿”å›å¹¶ä¸”æ²¡æœ‰èƒ½å¤Ÿåˆå§‹åŒ–ã€‚
 		}
 		for (int j = 0; j < 10; j++)
 		{
 			result[temp_id].species_check[j] = RestoreCheck[j];
 		}
 	}
-	result[temp_id].species_num = RestoreNum;	//ÆäÊµ¸Ğ¾õÃ»ÓĞÊ²Ã´ÒâÒå
+	result[temp_id].species_num = RestoreNum;	//å…¶å®æ„Ÿè§‰æ²¡æœ‰ä»€ä¹ˆæ„ä¹‰
 	result[temp_id].Known = false;
-	this->restore_species();	//¿Ó±Èº¯Êı
+	this->restore_species();	//å‘æ¯”å‡½æ•°
 	Track_Depth--;
 	return;
 }
 bool divide_formula::find_goal_symbol()
 {
 	this->update_species();
-	//ËõĞ¡µ±Ç°È¡Öµ·¶Î§
+	//ç¼©å°å½“å‰å–å€¼èŒƒå›´
 	if (contradiction() == false)
 		return false;
-	//Èç¹û·¢ÏÖÈ¡ÖµÃ¬¶Ü£¬ÍË³ö
+	//å¦‚æœå‘ç°å–å€¼çŸ›ç›¾ï¼Œé€€å‡º
 	if (CheckStatus() == true)
 		return true;
-	//¼ì²éÊÇ·ñÒÑ¾­±éÀúËùÓĞ×ÖÄ¸
+	//æ£€æŸ¥æ˜¯å¦å·²ç»éå†æ‰€æœ‰å­—æ¯
 
 	//TODO: Add Symbol_num query in turns
 	int min_factor = 10;
@@ -449,7 +449,7 @@ void divide_formula::update_species()
 	}
 
 	//Multiple Check Null first
-	//Õû³ıÊıÂÛ
+	//æ•´é™¤æ•°è®º
 	for (int i = 0; i < NK; i++)
 	{
 		int Temp_Sum = 0;
@@ -568,7 +568,7 @@ bool divide_formula::contradiction()
 			flag_all[result[i].num] = true;
 		}
 	}
-	//½«ÆäËûÎ´Öª×ÖÄ¸µÄ±»Õ¼ÓÃÊı×ÖÎ»ÉèÎª¿Õ
+	//å°†å…¶ä»–æœªçŸ¥å­—æ¯çš„è¢«å ç”¨æ•°å­—ä½è®¾ä¸ºç©º
 	for (int j = 0; j < 10; j++)
 	{
 		if (flag_all[j] == true)
@@ -578,12 +578,12 @@ bool divide_formula::contradiction()
 				if (result[i].num != j && result[i].Known == false && result[i].species_check[j] == 1)
 				{
 					result[i].species_check[j] = -1;
-					result[i].species_num--;//×îºÃ²»Òª¸ÄÕâ¸ö
+					result[i].species_num--;//æœ€å¥½ä¸è¦æ”¹è¿™ä¸ª
 				}
 			}
 		}
 	}
-	//¼ì²éÊÇ·ñÒÑ¾­ÓĞ×ÖÄ¸ÎŞÈ¡ÖµÑ¡Ïî
+	//æ£€æŸ¥æ˜¯å¦å·²ç»æœ‰å­—æ¯æ— å–å€¼é€‰é¡¹
 	for (int i = 0; i < symbol_num; i++)
 	{
 		if (result[i].species_num == 0)
@@ -674,7 +674,7 @@ bool divide_formula::CarryCheck()
 	}
 
 	//Muti part
-	int muti_up = 0;	//»áÒç³öµÄ·çÏÕ...
+	int muti_up = 0;	//ä¼šæº¢å‡ºçš„é£é™©...
 	for (int j = 0; j < N_Multi_Up_Len; j++)
 	{
 		muti_up = muti_up + Pointer_Up[j]->num * pow(10, j);
