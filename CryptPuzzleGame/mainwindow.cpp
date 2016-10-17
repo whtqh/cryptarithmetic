@@ -47,11 +47,12 @@ void MainWindow::FormulaShow()
     //w->setFixedSize(500,500);
 
     PuzzleButton* btnuser;
-    button_matrix = new PuzzleButton**[plus_formula->NK];
+    button_matrix = new PuzzleButton**[plus_formula->NK + 1];
     for(int i = 0;i<plus_formula->NK;i++)
     {
          button_matrix[i] = new PuzzleButton*[plus_formula->N[i]];
     }
+    button_matrix[plus_formula->NK] = new PuzzleButton*[plus_formula->N_Ans_Len];
     QGraphicsProxyWidget *proxy;
 
     for(int i = 0;i<plus_formula->NK;i++)
@@ -62,7 +63,8 @@ void MainWindow::FormulaShow()
             button_matrix[i][j]->setGeometry(QRect(50*(1+plus_formula->N_Ans_Len - plus_formula->N_Add_LenMax) + 50*j,50*i,50,50));
            //btnuser->setText(QString(QString::number()));
             button_matrix[i][j]->setText(QString(plus_formula->Pointer_N[i][plus_formula->N[i] - j -1]->layout));
-            button_matrix[i][j]->setMenu(menu);
+            //button_matrix[i][j]->num = plus_formula->Pointer_N[i][j]->num;//Have Bugs
+            button_matrix[i][j]->layout = plus_formula->Pointer_N[i][plus_formula->N[i] - j -1]->layout;
        }
        if(i == plus_formula->NK -1)
        {
@@ -79,13 +81,13 @@ void MainWindow::FormulaShow()
     scene->addItem(line);
     for(int i = 0;i<plus_formula->N_Ans_Len;i++)
     {
-        btnuser = new PuzzleButton(formula_widget);
-        btnuser->setGeometry(QRect(50 + 50*i,50*(plus_formula->NK + 1),50,50));
-        btnuser->setText(QString(plus_formula->Pointer_Ans[plus_formula->N_Ans_Len - i -1]->layout));
+        button_matrix[plus_formula->NK][i] = new PuzzleButton(formula_widget);
+        button_matrix[plus_formula->NK][i]->setGeometry(QRect(50 + 50*i,50*(plus_formula->NK + 1),50,50));
+        button_matrix[plus_formula->NK][i]->setText(QString(plus_formula->Pointer_Ans[plus_formula->N_Ans_Len - i -1]->layout));
+        //button_matrix[plus_formula->NK][i]->setMenu(menu);
+        //(button_matrix[plus_formula->NK][i])->num = (plus_formula->Pointer_Ans[plus_formula->N_Ans_Len - i -1])->num;
+        (button_matrix[plus_formula->NK][i])->layout = (plus_formula->Pointer_Ans[plus_formula->N_Ans_Len - i -1])->layout;
     }
-
-
-    btnuser->setMenu(menu);
 
     proxy = scene->addWidget(formula_widget);
 
@@ -100,6 +102,56 @@ void MainWindow::FormulaShow()
     this->setFixedSize(1080,720);
 
 }
+void MainWindow::FormulaMenuInitial()       //Set menu
+{
+    for(int i = 0;i<plus_formula->NK;i++)
+    {
+       for(int j = 0;j<plus_formula->N[i];j++)
+       {
+           button_matrix[i][j]->setMenu(menu);
+       }
+    }
+    for(int i = 0;i<plus_formula->N_Ans_Len;i++)
+    {
+        button_matrix[plus_formula->NK][i]->setMenu(menu);
+    }
+}
+void MainWindow::FormulaAnswerShow()
+{
+    if(plus_formula->answer_num >= 1)
+    {
+        for(int i = 0;i<plus_formula->NK;i++)
+        {
+           for(int j = 0;j<plus_formula->N[i];j++)
+           {
+               std::size_t found = plus_formula->symbol_layout.find(button_matrix[i][j]->layout);
+               int temp_num = plus_formula->answer[0][(int)found];
+               button_matrix[i][j]->setText(QString(QString::number(temp_num)));
+           }
+        }
+        for(int i = 0;i<plus_formula->N_Ans_Len;i++)
+        {
+            std::size_t found = plus_formula->symbol_layout.find(button_matrix[plus_formula->NK][i]->layout);
+            int temp_num = plus_formula->answer[0][(int)found];
+            button_matrix[plus_formula->NK][i]->setText(QString(QString::number(temp_num)));;
+        }
+    }
+    else
+    {
+        for(int i = 0;i<plus_formula->NK;i++)
+        {
+           for(int j = 0;j<plus_formula->N[i];j++)
+           {
+               button_matrix[i][j]->setText("*");
+           }
+        }
+        for(int i = 0;i<plus_formula->N_Ans_Len;i++)
+        {
+            button_matrix[plus_formula->NK][i]->setText("*");;
+        }
+    }
+}
+
 void MainWindow::FormulaPlusRead()
 {
     ifstream fin(file_path);
@@ -124,7 +176,17 @@ void MainWindow::FormulaPlusRead()
 //    }
 }
 
-void MainWindow::on_Button0_clicked()
+void MainWindow::on_Button0_clicked()   //Show Problem
 {
     FormulaShow();
+}
+
+void MainWindow::on_Button3_clicked()   //To solve problem
+{
+    FormulaMenuInitial();
+}
+
+void MainWindow::on_Button4_clicked()   //To show answers
+{
+    FormulaAnswerShow();
 }

@@ -32,13 +32,18 @@ public:
 
 
     void FormulaShow();
-    void FormulaPlusRead();
-
+    void FormulaPlusRead();     //Show Problem
+    void FormulaMenuInitial();  //To solve problem
+    void FormulaAnswerShow();   //To show the answers
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 private slots:
     void on_Button0_clicked();
+
+    void on_Button3_clicked();
+
+    void on_Button4_clicked();
 
 private:
     Ui::MainWindow *ui;
