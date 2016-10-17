@@ -10,4 +10,5 @@ INPUT(
 ./debug\PuzzleButton.o
 ./debug\qrc_res.o
 ./debug\moc_mainwindow.o
+./debug\moc_PuzzleButton.o
 );

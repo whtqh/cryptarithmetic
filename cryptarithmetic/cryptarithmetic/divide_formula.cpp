@@ -642,7 +642,7 @@ bool divide_formula::CarryCheck()
 		if (Pointer_N[i][N[i] - 1]->num == 0)
 			return false;
 	}
-	if (Pointer_Ans[N_Ans_Len - 1] == 0)
+	if (Pointer_Ans[N_Ans_Len - 1]->num == 0)
 		return false;
 
 	carry_check[0] = 0;

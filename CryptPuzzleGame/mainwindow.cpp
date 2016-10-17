@@ -9,19 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     file_num = 0;
-    file_path = "..\\CryptPuzzleGame\\puzzles\\puzzle1.txt";
-    menu = new QMenu;
-    menu->addAction("Set to 0");
-    menu->addAction("Set to 1");
-    menu->addAction("Set to 2");
-    menu->addAction("Set to 3");
-    menu->addAction("Set to 4");
-    menu->addAction("Set to 5");
-    menu->addAction("Set to 6");
-    menu->addAction("Set to 7");
-    menu->addAction("Set to 8");
-    menu->addAction("Set to 9");
-    menu->addSeparator();
+    file_path = "..\\CryptPuzzleGame\\puzzles\\puzzle2.txt";
+
+
 
 }
 
@@ -59,16 +49,16 @@ void MainWindow::FormulaShow()
     {
        for(int j = 0;j<plus_formula->N[i];j++)
        {
-            button_matrix[i][j] = new PuzzleButton(formula_widget);
-            button_matrix[i][j]->setGeometry(QRect(50*(1+plus_formula->N_Ans_Len - plus_formula->N_Add_LenMax) + 50*j,50*i,50,50));
-           //btnuser->setText(QString(QString::number()));
+            button_matrix[i][j] = new PuzzleButton(formula_widget,i,j);
+            connect(button_matrix[i][j], SIGNAL (Num_Increase(int,int)), this, SLOT (Increase_Num(int,int)));
+            button_matrix[i][j]->setGeometry(QRect(50*(1+plus_formula->N_Ans_Len - plus_formula->N[i]) + 50*j,50*i,50,50));
             button_matrix[i][j]->setText(QString(plus_formula->Pointer_N[i][plus_formula->N[i] - j -1]->layout));
             //button_matrix[i][j]->num = plus_formula->Pointer_N[i][j]->num;//Have Bugs
             button_matrix[i][j]->layout = plus_formula->Pointer_N[i][plus_formula->N[i] - j -1]->layout;
        }
        if(i == plus_formula->NK -1)
        {
-           btnuser = new PuzzleButton(formula_widget);
+           btnuser = new PuzzleButton(formula_widget,i,plus_formula->N[i]);
            btnuser->setGeometry(QRect(0,50*i,50,50));
            btnuser->setText("+");
        }
@@ -81,7 +71,8 @@ void MainWindow::FormulaShow()
     scene->addItem(line);
     for(int i = 0;i<plus_formula->N_Ans_Len;i++)
     {
-        button_matrix[plus_formula->NK][i] = new PuzzleButton(formula_widget);
+        button_matrix[plus_formula->NK][i] = new PuzzleButton(formula_widget,plus_formula->NK,i);
+        connect(button_matrix[plus_formula->NK][i], SIGNAL (Num_Increase(int,int)), this, SLOT (Increase_Num(int,int)));
         button_matrix[plus_formula->NK][i]->setGeometry(QRect(50 + 50*i,50*(plus_formula->NK + 1),50,50));
         button_matrix[plus_formula->NK][i]->setText(QString(plus_formula->Pointer_Ans[plus_formula->N_Ans_Len - i -1]->layout));
         //button_matrix[plus_formula->NK][i]->setMenu(menu);
@@ -102,21 +93,98 @@ void MainWindow::FormulaShow()
     this->setFixedSize(1080,720);
 
 }
-void MainWindow::FormulaMenuInitial()       //Set menu
+void MainWindow::FormulaMenuInitial()       //Check Answer
 {
-    for(int i = 0;i<plus_formula->NK;i++)
+    char char_key[10] = {};
+    bool check = true;
+    for(int t = 0;t<10;t++)
     {
-       for(int j = 0;j<plus_formula->N[i];j++)
-       {
-           button_matrix[i][j]->setMenu(menu);
-       }
+        char temp_c = ' ';
+        for(int i = 0;i < plus_formula->NK;i++)
+        {
+            for(int j = 0;j<plus_formula->N[i];j++)
+            {
+                if(button_matrix[i][j]->num == t)
+                {
+                    if(temp_c == ' ')
+                    {
+                        temp_c = button_matrix[i][j]->layout;
+                    }
+                    else if(temp_c != button_matrix[i][j]->layout)
+                    {
+                        check = false;
+                        break;
+                    }
+                }
+                else if(button_matrix[i][j]->num == -1)
+                {
+                    check = false;
+                    break;
+                }
+            }
+            if(check == false)
+                break;
+         }
+        if(check == false)
+            break;
+
+        for(int j = 0; j<plus_formula->N_Ans_Len;j++)
+        {
+            int i = plus_formula->NK;
+            if(button_matrix[i][j]->num == t)
+            {
+                if(temp_c == ' ')
+                {
+                    temp_c = button_matrix[i][j]->layout;
+                }
+                else if(temp_c != button_matrix[i][j]->layout|| button_matrix[i][j]->num == -1)
+                {
+                    check = false;
+                    break;
+                }
+            }
+            else if(button_matrix[i][j]->num == -1)
+            {
+                check = false;
+                break;
+            }
+            char_key[t] = temp_c;
+        }
     }
-    for(int i = 0;i<plus_formula->N_Ans_Len;i++)
+    if(check == true)
     {
-        button_matrix[plus_formula->NK][i]->setMenu(menu);
+        for(int j = 0;j<plus_formula->answer_num;j++)
+        {
+            bool temp_check = true;
+            for(int i = 0;i<10;i++)
+            {
+                if(char_key[i]!=' ')
+                {
+
+                    std::size_t found = plus_formula->symbol_layout.find(char_key[i]);
+                    char debug = plus_formula->result[(int)found].layout;
+                    int num = plus_formula->result[(int)found].num;
+
+
+                        if(plus_formula->answer[0][(int)found]!= i&&found!=std::string::npos)
+                        {
+                            temp_check = false;
+                            break;
+                        }
+                }
+            }
+            if(temp_check == true)
+            {
+                cout <<"success"<<endl;
+                return;
+            }
+        }
     }
+
+        cout << "Wrong Answer"<<endl;
+        return;
 }
-void MainWindow::FormulaAnswerShow()
+void MainWindow::FormulaAnswerShow()    //Add up func
 {
     if(plus_formula->answer_num >= 1)
     {
@@ -181,7 +249,7 @@ void MainWindow::on_Button0_clicked()   //Show Problem
     FormulaShow();
 }
 
-void MainWindow::on_Button3_clicked()   //To solve problem
+void MainWindow::on_Button3_clicked()   //To Check Answer
 {
     FormulaMenuInitial();
 }
@@ -190,3 +258,43 @@ void MainWindow::on_Button4_clicked()   //To show answers
 {
     FormulaAnswerShow();
 }
+
+void MainWindow::TestMenu()
+{
+
+    cout << "Fuck!"<<endl;
+}
+
+void MainWindow::Increase_Num(int m_i,int m_j)
+{
+    button_matrix[m_i][m_j]->num = (button_matrix[m_i][m_j]->num + 1)%10;
+    button_matrix[m_i][m_j]->setText(QString(button_matrix[m_i][m_j]->layout)
+                                 +"(" + QString(QString::number(button_matrix[m_i][m_j]->num)) + ")");
+    button_matrix[m_i][m_j]->setStyleSheet("QPushButton { background-color: #214b3f;font-size: 12pt;font-weight: bold;color: #ffff00;}");
+
+    for(int i = 0;i<plus_formula->NK;i++)
+    {
+        for(int j = 0;j<plus_formula->N[i];j++)
+        {
+            if(button_matrix[i][j]->layout == button_matrix[m_i][m_j]->layout&&(i!=m_i||j!=m_j))
+            {
+                button_matrix[i][j]->num = (button_matrix[i][j]->num + 1)%10;
+                button_matrix[i][j]->setText(QString(button_matrix[i][j]->layout)
+                                             +"(" + QString(QString::number(button_matrix[i][j]->num)) + ")");
+                button_matrix[i][j]->setStyleSheet("QPushButton { background-color: #214b3f;font-size: 12pt;font-weight: bold;color: #ffff00;}");
+            }
+        }
+    }
+    for(int j = 0; j<plus_formula->N_Ans_Len;j++)
+    {
+        int i = plus_formula->NK;
+        if(button_matrix[i][j]->layout == button_matrix[m_i][m_j]->layout&&(i!=m_i||j!=m_j))
+        {
+            button_matrix[i][j]->num = (button_matrix[i][j]->num + 1)%10;
+            button_matrix[i][j]->setText(QString(button_matrix[i][j]->layout)
+                                         +"(" + QString(QString::number(button_matrix[i][j]->num)) + ")");
+            button_matrix[i][j]->setStyleSheet("QPushButton { background-color: #214b3f;font-size: 12pt;font-weight: bold;color: #ffff00;}");
+        }
+    }
+}
+

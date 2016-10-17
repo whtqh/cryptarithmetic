@@ -9,6 +9,7 @@
 #include <QMenu>
 #include <QGraphicsLineItem>
 #include <QtWidgets/QApplication>
+#include <QIntValidator>
 #include <QString>
 #include "cryptarithmetic/formula.h"
 #include "cryptarithmetic/cryptarithmetic.h"
@@ -25,7 +26,7 @@ public:
     int file_num;
     string file_path;
     QGraphicsLineItem *line;
-    QMenu *menu;
+
     formula* plus_formula;
     PuzzleButton*** button_matrix;
 
@@ -38,13 +39,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-private slots:
+public slots:
     void on_Button0_clicked();
 
     void on_Button3_clicked();
 
     void on_Button4_clicked();
-
+    void TestMenu();
+    void Increase_Num(int i, int j);
+    void Decrease_Num(int i, int j);
 private:
     Ui::MainWindow *ui;
     QGraphicsScene * scene;

@@ -8,5 +8,6 @@
         <file alias="button_05">pic/button_05.png</file>
         <file alias="button_clear">pic/button_clear.png</file>
         <file alias="button_quit">pic/button_quit.png</file>
+        <file alias="window_bg">pic/bg_window.jpg</file>
     </qresource>
 </RCC>

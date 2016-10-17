@@ -10,4 +10,5 @@ INPUT(
 ./release\PuzzleButton.o
 ./release\qrc_res.o
 ./release\moc_mainwindow.o
+./release\moc_PuzzleButton.o
 );

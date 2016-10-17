@@ -19,7 +19,6 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -31,25 +30,25 @@ public:
     QWidget *centralWidget;
     QGraphicsView *graphicsView;
     QProgressBar *progressBar;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QPushButton *Button0;
     QPushButton *Button1;
     QPushButton *Button2;
     QPushButton *Button3;
     QPushButton *Button4;
-    QWidget *widget1;
+    QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout;
     QPushButton *Button_clear;
     QPushButton *Button_quit;
-    QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
+        MainWindow->resize(1080, 720);
         MainWindow->setMinimumSize(QSize(1080, 720));
-        MainWindow->setStyleSheet(QStringLiteral(""));
+        MainWindow->setStyleSheet(QStringLiteral("background-image: url(:/image/window_bg);"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new QGraphicsView(centralWidget);
@@ -60,38 +59,38 @@ public:
         graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
         progressBar = new QProgressBar(centralWidget);
         progressBar->setObjectName(QStringLiteral("progressBar"));
-        progressBar->setGeometry(QRect(20, 650, 841, 23));
+        progressBar->setGeometry(QRect(20, 660, 841, 23));
         progressBar->setValue(0);
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(850, 20, 201, 530));
-        verticalLayout = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(centralWidget);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(850, 20, 201, 530));
+        verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        Button0 = new QPushButton(widget);
+        Button0 = new QPushButton(layoutWidget);
         Button0->setObjectName(QStringLiteral("Button0"));
         Button0->setMinimumSize(QSize(160, 100));
         Button0->setStyleSheet(QStringLiteral("background-image: url(:/image/button_01);"));
 
         verticalLayout->addWidget(Button0);
 
-        Button1 = new QPushButton(widget);
+        Button1 = new QPushButton(layoutWidget);
         Button1->setObjectName(QStringLiteral("Button1"));
         Button1->setMinimumSize(QSize(160, 100));
         Button1->setStyleSheet(QStringLiteral("background-image: url(:/image/button_02);"));
 
         verticalLayout->addWidget(Button1);
 
-        Button2 = new QPushButton(widget);
+        Button2 = new QPushButton(layoutWidget);
         Button2->setObjectName(QStringLiteral("Button2"));
         Button2->setMinimumSize(QSize(160, 100));
         Button2->setStyleSheet(QStringLiteral("background-image: url(:/image/button_03);"));
 
         verticalLayout->addWidget(Button2);
 
-        Button3 = new QPushButton(widget);
+        Button3 = new QPushButton(layoutWidget);
         Button3->setObjectName(QStringLiteral("Button3"));
         Button3->setMinimumSize(QSize(160, 100));
         Button3->setStyleSheet(QLatin1String("background-image: url(:/image/button_04);\n"
@@ -99,7 +98,7 @@ public:
 
         verticalLayout->addWidget(Button3);
 
-        Button4 = new QPushButton(widget);
+        Button4 = new QPushButton(layoutWidget);
         Button4->setObjectName(QStringLiteral("Button4"));
         Button4->setMinimumSize(QSize(160, 100));
         Button4->setStyleSheet(QStringLiteral("background-image: url(:/image/button_05);"));
@@ -107,15 +106,15 @@ public:
 
         verticalLayout->addWidget(Button4);
 
-        widget1 = new QWidget(centralWidget);
-        widget1->setObjectName(QStringLiteral("widget1"));
-        widget1->setGeometry(QRect(850, 560, 199, 62));
-        horizontalLayout = new QHBoxLayout(widget1);
+        layoutWidget1 = new QWidget(centralWidget);
+        layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(850, 560, 199, 62));
+        horizontalLayout = new QHBoxLayout(layoutWidget1);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        Button_clear = new QPushButton(widget1);
+        Button_clear = new QPushButton(layoutWidget1);
         Button_clear->setObjectName(QStringLiteral("Button_clear"));
         Button_clear->setMinimumSize(QSize(95, 60));
         Button_clear->setStyleSheet(QStringLiteral("background-image: url(:/image/button_clear);"));
@@ -123,7 +122,7 @@ public:
 
         horizontalLayout->addWidget(Button_clear);
 
-        Button_quit = new QPushButton(widget1);
+        Button_quit = new QPushButton(layoutWidget1);
         Button_quit->setObjectName(QStringLiteral("Button_quit"));
         Button_quit->setEnabled(true);
         Button_quit->setMinimumSize(QSize(95, 60));
@@ -132,16 +131,10 @@ public:
         horizontalLayout->addWidget(Button_quit);
 
         MainWindow->setCentralWidget(centralWidget);
+        layoutWidget->raise();
         graphicsView->raise();
-        Button2->raise();
-        Button3->raise();
-        Button4->raise();
+        layoutWidget->raise();
         progressBar->raise();
-        Button_clear->raise();
-        Button_quit->raise();
-        statusBar = new QStatusBar(MainWindow);
-        statusBar->setObjectName(QStringLiteral("statusBar"));
-        MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);
 
