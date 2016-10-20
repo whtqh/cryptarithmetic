@@ -2,6 +2,8 @@
 
 times_formula::times_formula(string str_up, string str_down, string *str_in, string str_ans)
 {
+    answer = new int*[ANSWER_MAX_NUM];
+    answer_num = 0;
 	// Set Known Constant
 	constant = new symbol[10];
 	result = new symbol[10];
@@ -524,6 +526,12 @@ bool times_formula::contradiction()
 }
 void times_formula::PrintAnswer()
 {
+    answer[answer_num] = new int[10];
+    for(int i = 0;i<10;i++)
+    {
+        answer[answer_num][i] = result[i].num;
+    }
+    answer_num ++;
 	for (int i = 0; i < N_Multi_Up_Len; i++)
 	{
 		cout << Pointer_Up[N_Multi_Up_Len - i - 1]->num;

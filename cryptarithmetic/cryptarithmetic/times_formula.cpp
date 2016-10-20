@@ -399,6 +399,8 @@ void times_formula::update_species()
 
 	//Multiple Check Null first
 	//整除数论
+	
+	
 	for (int i = 0; i < NK; i++)
 	{
 		int Temp_Sum = 0;
@@ -438,8 +440,10 @@ void times_formula::update_species()
 			}
 		}
 	}
-
+	
 	//Zero
+	
+	
 	for (int i = 0; i < N_Multi_Down_Len; i++)
 	{
 		if (Pointer_Down[i]->Known == true && Pointer_Down[i]->num == 0)
@@ -457,6 +461,10 @@ void times_formula::update_species()
 			}
 		}
 	}
+	
+	
+	
+	
 	//Last multi
 	if (Pointer_Up[0]->Known == true)
 	{
@@ -473,6 +481,8 @@ void times_formula::update_species()
 			}
 		}
 	}
+	
+	
 }
 void times_formula::restore_species()
 {

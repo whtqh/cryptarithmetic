@@ -9,5 +9,27 @@
         <file alias="button_clear">pic/button_clear.png</file>
         <file alias="button_quit">pic/button_quit.png</file>
         <file alias="window_bg">pic/bg_window.jpg</file>
+        <file alias="bg_dialog">pic/bg_dialog.jpg</file>
+        <file>pic/ok.jpg</file>
+        <file>pic/bg_right.jpg</file>
+        <file>pic/bg_wrong.jpeg</file>
+    </qresource>
+    <qresource prefix="/icon">
+        <file alias="1">pic/1.png</file>
+        <file alias="2">pic/2.png</file>
+        <file alias="3">pic/3.png</file>
+        <file alias="4">pic/4.png</file>
+        <file alias="5">pic/5.png</file>
+        <file alias="6">pic/6.png</file>
+        <file alias="7">pic/7.png</file>
+        <file alias="8">pic/8.png</file>
+        <file alias="9">pic/9.png</file>
+        <file alias="10">pic/10.png</file>
+        <file alias="11">pic/11.png</file>
+        <file alias="12">pic/12.png</file>
+        <file alias="13">pic/13.png</file>
+        <file alias="14">pic/14.png</file>
+        <file alias="15">pic/15.png</file>
+        <file alias="16">pic/16.png</file>
     </qresource>
 </RCC>

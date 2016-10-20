@@ -8,7 +8,13 @@ INPUT(
 ./debug\symbol.o
 ./debug\times_formula.o
 ./debug\PuzzleButton.o
+./debug\configuredialog.o
+./debug\Check_Right_Dialog.o
+./debug\Check_Wrong_Dialog.o
 ./debug\qrc_res.o
 ./debug\moc_mainwindow.o
 ./debug\moc_PuzzleButton.o
+./debug\moc_configuredialog.o
+./debug\moc_check_right_dialog.o
+./debug\moc_check_wrong_dialog.o
 );

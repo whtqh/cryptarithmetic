@@ -20,7 +20,10 @@ SOURCES += main.cpp\
     cryptarithmetic/minus_formula.cpp \
     cryptarithmetic/symbol.cpp \
     cryptarithmetic/times_formula.cpp \
-    PuzzleButton.cpp
+    PuzzleButton.cpp \
+    configuredialog.cpp \
+    Check_Right_Dialog.cpp \
+    Check_Wrong_Dialog.cpp
 
 HEADERS  += mainwindow.h \
     cryptarithmetic/divide_formula.h \
@@ -29,9 +32,15 @@ HEADERS  += mainwindow.h \
     cryptarithmetic/symbol.h \
     cryptarithmetic/times_formula.h \
     cryptarithmetic/cryptarithmetic.h \
-    PuzzleButton.h
+    PuzzleButton.h \
+    configuredialog.h \
+    check_right_dialog.h \
+    check_wrong_dialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    configuredialog.ui \
+    check_right_dialog.ui \
+    check_wrong_dialog.ui
 
 DISTFILES += \
     cryptarithmetic/Debug/cryptarithmetic.obj.enc \

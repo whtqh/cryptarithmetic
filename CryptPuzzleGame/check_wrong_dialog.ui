@@ -1,9 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>Check_Wrong_Dialog</class>
- <widget name="Check_Wrong_Dialog" class="QDialog">
+ <widget class="QDialog" name="Check_Wrong_Dialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -12,10 +10,29 @@
     <height>300</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>300</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget name="buttonBox" class="QDialogButtonBox">
+  <property name="windowIcon">
+   <iconset resource="res.qrc">
+    <normaloff>:/icon/8</normaloff>:/icon/8</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-image: url(:/image/pic/bg_wrong.jpeg);</string>
+  </property>
+  <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -32,8 +49,9 @@
    </property>
   </widget>
  </widget>
- <pixmapfunction/>
- <resources/>
+ <resources>
+  <include location="res.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

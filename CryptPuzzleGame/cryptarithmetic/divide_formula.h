@@ -34,6 +34,11 @@ class divide_formula
 		symbol **Pointer_Up;		//被乘数的指针的一维数组
 		symbol **Pointer_Down;	//乘数的指针的一维数组
 
+
+        int **answer;
+        int answer_num;
+
+
 		/*						DEFGH						<-	str_down
 	str_up  ABCD | XXXXXXXXXXXX			<-	str_ans
 						 /	XXXXX							--->[4]

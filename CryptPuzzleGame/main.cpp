@@ -17,8 +17,7 @@ int main(int argc, char *argv[])
 
     game.setFixedSize(1080,720);
     game.show();
-    game.FormulaPlusRead();
 
-    //game.FormulaShow();
+
     return a.exec();
 }

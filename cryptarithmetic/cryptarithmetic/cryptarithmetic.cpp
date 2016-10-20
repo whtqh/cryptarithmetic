@@ -115,9 +115,9 @@ void call_divide_func()
 
 void main()
 {
-	call_plus_func();
+	//call_plus_func();
 	//call_minus_func();
-	//call_times_func();
+	call_times_func();
 	//call_divide_func();
 	return;
 }

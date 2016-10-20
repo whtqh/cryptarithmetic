@@ -25,6 +25,12 @@ public:
 	symbol **Pointer_Up;		//被乘数的指针的一维数组
 	symbol **Pointer_Down;	//乘数的指针的一维数组
 
+
+    int **answer;
+    int answer_num;
+
+
+
 	times_formula(string str_up, string str_down, string *str_in, string str_ans);
 	~times_formula();
 	void times_track_recurison();

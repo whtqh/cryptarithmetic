@@ -48,6 +48,9 @@ public:
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
         MainWindow->resize(1080, 720);
         MainWindow->setMinimumSize(QSize(1080, 720));
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/icon/7"), QSize(), QIcon::Normal, QIcon::Off);
+        MainWindow->setWindowIcon(icon);
         MainWindow->setStyleSheet(QStringLiteral("background-image: url(:/image/window_bg);"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));

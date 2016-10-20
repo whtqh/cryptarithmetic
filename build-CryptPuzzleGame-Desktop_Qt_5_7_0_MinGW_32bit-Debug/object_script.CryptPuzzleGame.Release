@@ -8,7 +8,13 @@ INPUT(
 ./release\symbol.o
 ./release\times_formula.o
 ./release\PuzzleButton.o
+./release\configuredialog.o
+./release\Check_Right_Dialog.o
+./release\Check_Wrong_Dialog.o
 ./release\qrc_res.o
 ./release\moc_mainwindow.o
 ./release\moc_PuzzleButton.o
+./release\moc_configuredialog.o
+./release\moc_check_right_dialog.o
+./release\moc_check_wrong_dialog.o
 );

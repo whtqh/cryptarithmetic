@@ -186,6 +186,7 @@ Makefile: ../CryptPuzzleGame/CryptPuzzleGame.pro F:/Qt/Qt5.7.0/5.7/mingw53_32/mk
 		F:/Qt/Qt5.7.0/5.7/mingw53_32/mkspecs/features/win32/qt_config.prf \
 		F:/Qt/Qt5.7.0/5.7/mingw53_32/mkspecs/win32-g++/qmake.conf \
 		F:/Qt/Qt5.7.0/5.7/mingw53_32/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		F:/Qt/Qt5.7.0/5.7/mingw53_32/mkspecs/features/exclusive_builds.prf \
 		F:/Qt/Qt5.7.0/5.7/mingw53_32/mkspecs/features/default_pre.prf \
 		F:/Qt/Qt5.7.0/5.7/mingw53_32/mkspecs/features/win32/default_pre.prf \
@@ -340,6 +341,7 @@ F:/Qt/Qt5.7.0/5.7/mingw53_32/mkspecs/features/qt_config.prf:
 F:/Qt/Qt5.7.0/5.7/mingw53_32/mkspecs/features/win32/qt_config.prf:
 F:/Qt/Qt5.7.0/5.7/mingw53_32/mkspecs/win32-g++/qmake.conf:
 F:/Qt/Qt5.7.0/5.7/mingw53_32/mkspecs/features/spec_post.prf:
+.qmake.stash:
 F:/Qt/Qt5.7.0/5.7/mingw53_32/mkspecs/features/exclusive_builds.prf:
 F:/Qt/Qt5.7.0/5.7/mingw53_32/mkspecs/features/default_pre.prf:
 F:/Qt/Qt5.7.0/5.7/mingw53_32/mkspecs/features/win32/default_pre.prf:
